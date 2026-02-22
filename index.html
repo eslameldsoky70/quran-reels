@@ -748,7 +748,6 @@
           <div class="tab" onclick="switchTab('bg')">🖼 الخلفيات</div>
         </div>
         <div id="sbar">اختر شيخاً وسورة للبدء</div>
-        <button class="btn-g" onclick="startRec()">⏺ تسجيل</button>
       </div>
 
       <div class="main">
@@ -1126,96 +1125,6 @@
           <div class="sec">
             <span class="lbl">التصدير</span>
             <!-- تصدير حقيقي بـ Canvas + MediaRecorder -->
-            <div
-              style="
-                background: rgba(201, 151, 58, 0.06);
-                border: 1px solid rgba(201, 151, 58, 0.18);
-                border-radius: 10px;
-                padding: 11px 12px;
-                margin-bottom: 8px;
-              "
-            >
-              <div style="font-size: 11px; color: #b5c4bc; line-height: 1.8">
-                <div
-                  style="font-weight: 700; color: #e4b55a; margin-bottom: 6px"
-                >
-                  📹 تصدير فيديو حقيقي
-                </div>
-                <div>١. اضغط <b style="color: #5ec285">ابدأ التسجيل</b></div>
-                <div>
-                  ٢. اضغط <b style="color: #fff">▶ تشغيل</b> من الـ Player
-                </div>
-                <div>٣. انتظر تشغيل الآيات</div>
-                <div>٤. اضغط <b style="color: #f47c7c">أوقف وحمّل</b></div>
-              </div>
-            </div>
-            <button
-              id="recBtn"
-              onclick="startRec()"
-              style="
-                width: 100%;
-                padding: 11px;
-                background: linear-gradient(135deg, #245c38, #3ea066);
-                border: none;
-                border-radius: 10px;
-                color: #fff;
-                font-family: &quot;Cairo&quot;, sans-serif;
-                font-size: 14px;
-                font-weight: 700;
-                cursor: pointer;
-                box-shadow: 0 4px 14px rgba(36, 92, 56, 0.35);
-                margin-bottom: 6px;
-              "
-            >
-              ⏺ ابدأ التسجيل
-            </button>
-            <button
-              id="stopBtn"
-              onclick="stopRec()"
-              style="
-                width: 100%;
-                padding: 11px;
-                background: linear-gradient(135deg, #5c2424, #a03030);
-                border: none;
-                border-radius: 10px;
-                color: #fff;
-                font-family: &quot;Cairo&quot;, sans-serif;
-                font-size: 14px;
-                font-weight: 700;
-                cursor: pointer;
-                display: none;
-                margin-bottom: 6px;
-              "
-            >
-              ⏹ أوقف وحمّل MP4
-            </button>
-            <div
-              id="recStatus"
-              style="
-                display: none;
-                font-size: 11px;
-                text-align: center;
-                padding: 7px;
-                border-radius: 8px;
-                background: rgba(94, 194, 133, 0.1);
-                border: 1px solid rgba(94, 194, 133, 0.3);
-                color: #5ec285;
-              "
-            >
-              ⏺ جارٍ التسجيل... <span id="recTimer">0:00</span>
-            </div>
-            <div
-              id="recNote"
-              style="
-                margin-top: 8px;
-                font-size: 10px;
-                color: #6e8878;
-                line-height: 1.7;
-                display: none;
-              "
-            >
-              ⚠ المتصفح سيطلب إذن مشاركة الشاشة — اختر نافذة التطبيق
-            </div>
           </div>
         </div>
       </div>
@@ -1266,11 +1175,16 @@
         audio.onended = () => recorder.stop();
       }
       function drawFrame() {
-        const el = document.getElementById("screen");
+        ctx.fillStyle = "#000";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        html2canvas(el).then((img) => {
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        });
+        ctx.drawImage(
+          document.querySelector(".screen"),
+          0,
+          0,
+          canvas.width,
+          canvas.height,
+        );
 
         requestAnimationFrame(drawFrame);
       }
@@ -1278,6 +1192,7 @@
       canvas.width = 1080;
       canvas.height = 1920;
       const ctx = canvas.getContext("2d");
+      drawFrame();
       async function convertToMP4(videoBlob) {
         const ffmpeg = new FFmpeg.FFmpeg();
         await ffmpeg.load();
