@@ -1537,17 +1537,18 @@
         $("pdot").style.display = "none";
       });
       audio.addEventListener("ended", () => {
-        // الانتقال الطبيعي بين الآيات
-        const sl = curSl();
+        // لو كانت البسملة
+        if (S.active === -1) {
+          S.active = 0;
+          curUrl = "";
+          loadAudio(true);
+          return;
+        }
 
-        if (S.active + 1 < sl.length) {
+        // لو ما زال داخل النطاق
+        if (curAN() < S.vTo) {
           S.active++;
           curUrl = "";
-
-          loadVerse();
-          updateScreen();
-          renderVList();
-
           loadAudio(true);
         } else {
           S.playing = false;
