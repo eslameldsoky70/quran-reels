@@ -1456,41 +1456,36 @@
       };
 
       /* ══ AUDIO ══ */
-     async function loadAudio(autoPlay = false) {
+      async function loadAudio(autoPlay = false) {
+        if (!S.sh || !S.surah) return;
 
-  if (!S.sh || !S.surah) return;
+        let surahNum;
+        let ayahNum;
 
-  let surahNum;
-  let ayahNum;
+        if (S.active === -1) {
+          surahNum = 1;
+          ayahNum = 1;
 
-  if (S.active === -1) {
+          $("vAr").textContent = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
+          $("vRef").textContent = "﴿ البسملة ﴾";
+          $("vEn").textContent = "";
+          $("npT").textContent = "البسملة";
+        } else {
+          surahNum = S.surah.n;
+          ayahNum = curAN();
 
-    surahNum = 1;
-    ayahNum  = 1;
+          loadVerse(); // بدون await
+        }
 
-    $("vAr").textContent =
-      "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
-    $("vRef").textContent = "﴿ البسملة ﴾";
-    $("vEn").textContent  = "";
-    $("npT").textContent  = "البسملة";
+        const url = ayahUrl(S.sh, surahNum, ayahNum);
 
-  } else {
+        if (url === curUrl) return;
 
-    surahNum = S.surah.n;
-    ayahNum  = curAN();
+        curUrl = url;
 
-    loadVerse(); // بدون await
-  }
-
-  const url = ayahUrl(S.sh, surahNum, ayahNum);
-
-  if (url === curUrl) return;
-
-  curUrl = url;
-
-  audio.src = url;   // غير المصدر مباشرة
-  if (autoPlay) audio.play();
-}
+        audio.src = url; // غير المصدر مباشرة
+        if (autoPlay) audio.play();
+      }
       function doPlay() {
         const p = audio.play();
         if (p?.catch)
@@ -1536,8 +1531,11 @@
           return;
         }
 
-        // لو ما زال داخل النطاق
-        if (curAN() < S.vTo) {
+        // عدد الآيات داخل النطاق
+        const total = S.vTo - S.vFrom + 1;
+
+        // طالما لم نصل لآخر آية في النطاق
+        if (S.active < total - 1) {
           S.active++;
           curUrl = "";
           loadAudio(true);
@@ -1594,11 +1592,15 @@
         loadAudio(true);
       }
       function playAll() {
-        S.active = -1; // ابدأ بالبسملة
+        // لو البداية من أول السورة فقط
+        if (S.vFrom === 1) {
+          S.active = -1; // بسملة
+        } else {
+          S.active = 0; // ابدأ مباشرة من الآية المحددة
+        }
+
         curUrl = "";
         loadAudio(true);
-        updateScreen();
-        renderVList();
       }
       function prevV() {
         if (S.active > 0) {
@@ -1694,13 +1696,26 @@
         loadAudio(true);
       }
       function onRange() {
-        if (!S.surah || !S.data.length) return;
-        S.vFrom = Math.max(1, +$("vFrom").value || 1);
-        S.vTo = Math.min(+$("vTo").value || 7, S.data.length);
+        if (!S.surah) return;
+
+        const max = S.surah.v;
+
+        let from = +$("vFrom").value || 1;
+        let to = +$("vTo").value || max;
+
+        from = Math.max(1, Math.min(from, max));
+        to = Math.max(from, Math.min(to, max));
+
+        S.vFrom = from;
+        S.vTo = to;
+
+        $("vFrom").value = from;
+        $("vTo").value = to;
+
         S.active = 0;
         curUrl = "";
-        renderVList();
-        updateScreen();
+
+        loadAudio(false);
       }
       async function loadBasmala() {
         if (!S.sh) return;
