@@ -1782,39 +1782,40 @@
 
       /* ══ SCREEN ══ */
       function updateScreen() {
-         if (!S.surah) return;
-        const v = curV();
-        $("vAr").textContent = v.ar;
-        $("vRef").textContent = `﴿ ${S.surah.ar} : ${arN(curAN())} ﴾`;
-        $("vEn").textContent = v.en;
-        $("vEn").style.display = S.fx.trans ? "block" : "none";
-        const ff =
-          S.font === "amiri"
-            ? "'Amiri',serif"
-            : S.font === "cairo"
-              ? "'Cairo',sans-serif"
-              : "'Scheherazade New',serif";
-        Object.assign($("vAr").style, {
-          fontFamily: ff,
-          fontSize: S.size + "px",
-          color: S.color,
-        });
-        const va = $("vArea");
-        if (S.pos === "top") {
-          va.style.top = "14%";
-          va.style.bottom = "auto";
-          va.style.transform = "none";
-        } else if (S.pos === "bottom") {
-          va.style.top = "auto";
-          va.style.bottom = "12%";
-          va.style.transform = "none";
-        } else {
-          va.style.top = "50%";
-          va.style.bottom = "auto";
-          va.style.transform = "translateY(-50%)";
-        }
-        $("npT").textContent = S.surah.ar + " — آية " + arN(curAN());
-      }
+
+  if (!S.surah) return;
+
+  // لا نلمس النص هنا إطلاقاً
+
+  const ff =
+    S.font === "amiri"
+      ? "'Amiri',serif"
+      : S.font === "cairo"
+      ? "'Cairo',sans-serif"
+      : "'Scheherazade New',serif";
+
+  $("vAr").style.fontFamily = ff;
+  $("vAr").style.fontSize   = S.size + "px";
+  $("vAr").style.color      = S.color;
+
+  $("vEn").style.display = S.fx.trans ? "block" : "none";
+
+  const va = $("vArea");
+
+  if (S.pos === "top") {
+    va.style.top = "14%";
+    va.style.bottom = "auto";
+    va.style.transform = "none";
+  } else if (S.pos === "bottom") {
+    va.style.top = "auto";
+    va.style.bottom = "12%";
+    va.style.transform = "none";
+  } else {
+    va.style.top = "50%";
+    va.style.bottom = "auto";
+    va.style.transform = "translateY(-50%)";
+  }
+}
 
       /* ══ CONTROLS ══ */
       function renderBGs() {
