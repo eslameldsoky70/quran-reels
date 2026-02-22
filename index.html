@@ -1459,18 +1459,23 @@
       async function loadAudio(autoPlay = false) {
         if (!S.sh || !S.surah) return;
 
-        let surahNum = S.surah.n;
-        let ayahNum = curAN();
+        let surahNum;
+        let ayahNum;
 
-        // لو أول تشغيل → نشغل البسملة
-        if (S.active === 0) {
+        // لو active = -1 → نشغل البسملة
+        if (S.active === -1) {
           surahNum = 1;
           ayahNum = 1;
 
           $("vAr").textContent = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
           $("vRef").textContent = "﴿ البسملة ﴾";
+          $("vEn").textContent = "";
+          $("npT").textContent = "البسملة";
         } else {
-          await loadVerse(); // تحميل نص الآية العادية
+          surahNum = S.surah.n;
+          ayahNum = curAN();
+
+          await loadVerse();
         }
 
         const url = ayahUrl(S.sh, surahNum, ayahNum);
@@ -1679,10 +1684,10 @@
 
         S.surah = sr;
 
-        S.vFrom = 0; // نبدأ من 0
-        S.active = 0;
+        S.vFrom = 1; // مهم جداً
+        S.active = -1; // هذا هو الحل
 
-        S.vTo = sr.v; // عدد آيات السورة الحقيقي
+        S.vTo = sr.v;
 
         $("vFrom").value = 1;
         $("vTo").value = sr.v;
