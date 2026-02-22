@@ -1,0 +1,1971 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نور الريلز 🌙</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&family=Scheherazade+New:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+        font-family: "Cairo", sans-serif;
+        background: #070e09;
+        color: #f0ebe1;
+        direction: rtl;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.04;
+        z-index: 0;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpolygon points='60,3 72,42 110,42 80,65 90,104 60,82 30,104 40,65 10,42 48,42' fill='none' stroke='%23c9973a' stroke-width='1'/%3E%3C/svg%3E");
+      }
+      .app {
+        display: grid;
+        grid-template-rows: 54px 1fr;
+        height: 100vh;
+        position: relative;
+        z-index: 1;
+      }
+      .main {
+        display: grid;
+        grid-template-columns: 275px 1fr 260px;
+        overflow: hidden;
+      }
+      .top {
+        background: rgba(7, 14, 9, 0.98);
+        border-bottom: 1px solid rgba(201, 151, 58, 0.15);
+        display: flex;
+        align-items: center;
+        padding: 0 14px;
+        gap: 8px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .logo-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #245c38, #3ea066);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+      }
+      .logo-text {
+        font-family: "Amiri", serif;
+        font-size: 18px;
+        color: #e4b55a;
+      }
+      .tabs {
+        display: flex;
+        gap: 3px;
+        margin-right: 8px;
+      }
+      .tab {
+        padding: 5px 11px;
+        border-radius: 100px;
+        font-size: 12px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        background: transparent;
+        color: #6e8878;
+        transition: 0.2s;
+        white-space: nowrap;
+      }
+      .tab.on {
+        border-color: rgba(201, 151, 58, 0.5);
+        background: rgba(201, 151, 58, 0.1);
+        color: #e4b55a;
+      }
+      #sbar {
+        margin-right: auto;
+        font-size: 11px;
+        color: #6e8878;
+        max-width: 260px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .btn-g {
+        padding: 7px 14px;
+        border-radius: 7px;
+        border: none;
+        font-family: "Cairo", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        background: linear-gradient(135deg, #6b4e18, #c9973a);
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .panel {
+        background: #0c1810;
+        overflow-y: auto;
+      }
+      .left {
+        border-left: 1px solid rgba(201, 151, 58, 0.12);
+      }
+      .right {
+        border-right: 1px solid rgba(201, 151, 58, 0.12);
+      }
+      .sec {
+        padding: 12px 13px;
+        border-bottom: 1px solid rgba(201, 151, 58, 0.09);
+      }
+      .lbl {
+        font-size: 10px;
+        letter-spacing: 2px;
+        color: #6e8878;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 9px;
+      }
+      .sh-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .sh-card {
+        border: 1px solid rgba(201, 151, 58, 0.1);
+        border-radius: 10px;
+        padding: 9px 7px;
+        cursor: pointer;
+        text-align: center;
+        background: #112016;
+        transition: 0.2s;
+      }
+      .sh-card:hover,
+      .sh-card.on {
+        border-color: rgba(201, 151, 58, 0.55);
+        background: rgba(201, 151, 58, 0.08);
+      }
+      .sh-card.on .sh-n {
+        color: #e4b55a;
+      }
+      .sh-f {
+        font-size: 20px;
+        margin-bottom: 4px;
+      }
+      .sh-n {
+        font-size: 10px;
+        color: #b5c4bc;
+        line-height: 1.3;
+        font-weight: 600;
+      }
+      .sh-c {
+        font-size: 9px;
+        color: #6e8878;
+        margin-top: 2px;
+      }
+      .inp {
+        width: 100%;
+        background: #18301e;
+        border: 1px solid rgba(201, 151, 58, 0.14);
+        border-radius: 7px;
+        color: #f0ebe1;
+        font-family: "Cairo", sans-serif;
+        font-size: 13px;
+        padding: 7px 10px;
+        outline: none;
+      }
+      .s-list {
+        max-height: 220px;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        margin-top: 7px;
+      }
+      .s-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+        border-radius: 7px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: 0.15s;
+      }
+      .s-item:hover {
+        background: #18301e;
+      }
+      .s-item.on {
+        background: rgba(201, 151, 58, 0.08);
+        border-color: rgba(201, 151, 58, 0.3);
+      }
+      .s-num {
+        width: 21px;
+        height: 21px;
+        border-radius: 50%;
+        background: #18301e;
+        border: 1px solid rgba(201, 151, 58, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 9px;
+        color: #c9973a;
+        flex-shrink: 0;
+      }
+      .s-ar {
+        font-family: "Scheherazade New", serif;
+        font-size: 15px;
+        flex: 1;
+      }
+      .s-v {
+        font-size: 9px;
+        color: #6e8878;
+      }
+      .v-range {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        margin-bottom: 9px;
+      }
+      .finp {
+        width: 100%;
+        background: #18301e;
+        border: 1px solid rgba(201, 151, 58, 0.2);
+        border-radius: 7px;
+        color: #f0ebe1;
+        font-family: "Cairo", sans-serif;
+        font-size: 14px;
+        padding: 7px;
+        outline: none;
+        text-align: center;
+      }
+      .flbl {
+        font-size: 10px;
+        color: #6e8878;
+        display: block;
+        margin-bottom: 3px;
+      }
+      .v-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        max-height: 260px;
+        overflow-y: auto;
+      }
+      .v-item {
+        padding: 8px 9px;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: #112016;
+        transition: 0.15s;
+        display: flex;
+        gap: 7px;
+        align-items: flex-start;
+      }
+      .v-item:hover,
+      .v-item.on {
+        border-color: rgba(201, 151, 58, 0.45);
+        background: rgba(201, 151, 58, 0.07);
+      }
+      .v-num {
+        font-size: 10px;
+        color: #c9973a;
+        font-weight: 700;
+        padding-top: 2px;
+        flex-shrink: 0;
+        min-width: 14px;
+      }
+      .v-ar {
+        font-family: "Scheherazade New", serif;
+        font-size: 13px;
+        line-height: 1.9;
+        color: #f0ebe1;
+      }
+      .v-en {
+        font-size: 8.5px;
+        color: #6e8878;
+        margin-top: 1px;
+        line-height: 1.4;
+      }
+      .bg-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 5px;
+      }
+      .bg-t {
+        aspect-ratio: 9/16;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.07);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        font-size: 18px;
+      }
+      .bg-t.on {
+        border-color: #c9973a;
+        box-shadow: 0 0 10px rgba(201, 151, 58, 0.3);
+      }
+      .bg-l {
+        font-size: 9px;
+        color: #b5c4bc;
+        margin-top: 2px;
+      }
+      .center {
+        background: #070e09;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .sbar2 {
+        padding: 7px 13px;
+        border-bottom: 1px solid rgba(201, 151, 58, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-shrink: 0;
+      }
+      .pos-btn {
+        padding: 4px 11px;
+        border-radius: 100px;
+        font-size: 11px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        background: transparent;
+        color: #6e8878;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .pos-btn.on {
+        border-color: rgba(201, 151, 58, 0.5);
+        background: rgba(201, 151, 58, 0.1);
+        color: #e4b55a;
+      }
+      .stage {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        position: relative;
+        overflow: hidden;
+      }
+      .phone {
+        width: 244px;
+        height: 434px;
+        border-radius: 37px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        background: #000;
+        box-shadow:
+          0 34px 65px rgba(0, 0, 0, 0.85),
+          0 0 38px rgba(36, 92, 56, 0.2);
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+      .screen {
+        position: absolute;
+        inset: 6px;
+        border-radius: 32px;
+        overflow: hidden;
+      }
+      .sc-geo {
+        position: absolute;
+        inset: 0;
+        opacity: 0.04;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Ccircle cx='35' cy='35' r='30' fill='none' stroke='%23c9973a' stroke-width='.7'/%3E%3C/svg%3E");
+      }
+      .sc-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at 50% 44%,
+          rgba(36, 92, 56, 0.25),
+          transparent 68%
+        );
+        pointer-events: none;
+      }
+      .sc-moon {
+        position: absolute;
+        top: 11px;
+        width: 100%;
+        text-align: center;
+        font-size: 17px;
+        opacity: 0.7;
+        animation: float 3.5s ease-in-out infinite;
+      }
+      .sc-bas {
+        position: absolute;
+        top: 36px;
+        width: 100%;
+        text-align: center;
+        font-family: "Scheherazade New", serif;
+        font-size: 10px;
+        color: rgba(200, 160, 50, 0.85);
+      }
+      .sc-ln {
+        position: absolute;
+        right: 13px;
+        left: 13px;
+        height: 1px;
+        background: linear-gradient(
+          to left,
+          transparent,
+          rgba(200, 160, 50, 0.38),
+          transparent
+        );
+      }
+      .sc-v {
+        position: absolute;
+        right: 10px;
+        left: 10px;
+        z-index: 2;
+        text-align: center;
+      }
+      .v-a {
+        line-height: 2.05;
+        text-shadow: 0 2px 11px rgba(0, 0, 0, 0.95);
+        direction: rtl;
+        word-break: break-word;
+      }
+      .v-r {
+        margin-top: 5px;
+        font-size: 9px;
+        color: rgba(200, 160, 50, 0.9);
+        font-family: "Cairo", sans-serif;
+      }
+      .v-e {
+        margin-top: 4px;
+        font-size: 8px;
+        color: rgba(175, 195, 185, 0.75);
+        line-height: 1.5;
+        direction: ltr;
+      }
+      .sc-info {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        font-family: "Cairo", sans-serif;
+      }
+      .pdot {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #5ec285;
+        box-shadow: 0 0 5px #5ec285;
+        animation: twinkle 1s ease-in-out infinite;
+        display: none;
+      }
+      .player {
+        background: #0c1810;
+        border-top: 1px solid rgba(201, 151, 58, 0.11);
+        padding: 10px 16px;
+        flex-shrink: 0;
+      }
+      .pt {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 7px;
+      }
+      .np-i {
+        flex: 1;
+        min-width: 0;
+      }
+      .np-t {
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .np-s {
+        font-size: 11px;
+        color: #6e8878;
+        margin-top: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: 0.3s;
+      }
+      .pbtns {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .pb {
+        border-radius: 50%;
+        border: 1px solid rgba(201, 151, 58, 0.2);
+        background: #18301e;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+      .pb:hover {
+        border-color: #c9973a;
+      }
+      .pb-main {
+        width: 40px;
+        height: 40px;
+        border: none !important;
+        font-size: 17px;
+        background: linear-gradient(135deg, #245c38, #3ea066);
+        box-shadow: 0 3px 10px rgba(36, 92, 56, 0.4);
+      }
+      .pb-sm {
+        width: 30px;
+        height: 30px;
+      }
+      .prog-r {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .prog-t {
+        font-size: 10px;
+        color: #6e8878;
+        min-width: 28px;
+      }
+      .prog-b {
+        flex: 1;
+        height: 4px;
+        background: #18301e;
+        border-radius: 100px;
+        cursor: pointer;
+        position: relative;
+      }
+      .prog-f {
+        height: 100%;
+        background: linear-gradient(to right, #c9973a, #e4b55a);
+        border-radius: 100px;
+        width: 0%;
+        transition: 0.08s;
+      }
+      .prog-d {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: #e4b55a;
+        position: absolute;
+        top: -4px;
+        left: 0%;
+        box-shadow: 0 0 5px rgba(201, 151, 58, 0.6);
+        pointer-events: none;
+        transform: translateX(-50%);
+      }
+      .font-btn {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 7px;
+        background: #112016;
+        cursor: pointer;
+        font-size: 13px;
+        color: #b5c4bc;
+        margin-bottom: 4px;
+        transition: 0.2s;
+        direction: rtl;
+        text-align: right;
+      }
+      .font-btn:hover,
+      .font-btn.on {
+        border-color: rgba(201, 151, 58, 0.45);
+        color: #f0ebe1;
+        background: rgba(201, 151, 58, 0.07);
+      }
+      .sz-r {
+        display: flex;
+        gap: 3px;
+        flex-wrap: wrap;
+        margin-top: 6px;
+      }
+      .sz-b {
+        padding: 3px 7px;
+        font-size: 10px;
+        border-radius: 5px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        background: transparent;
+        color: #6e8878;
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .sz-b:hover,
+      .sz-b.on {
+        border-color: rgba(201, 151, 58, 0.45);
+        background: rgba(201, 151, 58, 0.09);
+        color: #e4b55a;
+      }
+      .clr-r {
+        display: flex;
+        gap: 5px;
+        flex-wrap: wrap;
+      }
+      .clr {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2.5px solid transparent;
+        transition: 0.15s;
+      }
+      .clr.on {
+        border-color: #fff;
+        transform: scale(1.2);
+        box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+      }
+      .sw-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 7px 0;
+        cursor: pointer;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .sw-l {
+        font-size: 12px;
+        color: #b5c4bc;
+      }
+      .sw {
+        width: 34px;
+        height: 19px;
+        border-radius: 100px;
+        position: relative;
+        transition: 0.25s;
+        flex-shrink: 0;
+      }
+      .sw-k {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #fff;
+        position: absolute;
+        top: 3px;
+        transition: 0.25s;
+      }
+      .toast {
+        position: fixed;
+        bottom: 18px;
+        left: 50%;
+        transform: translateX(-50%) translateY(70px);
+        background: #0c1810;
+        border: 1px solid rgba(201, 151, 58, 0.55);
+        padding: 8px 22px;
+        border-radius: 100px;
+        font-size: 13px;
+        color: #e4b55a;
+        z-index: 9999;
+        white-space: nowrap;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.6);
+        transition: 0.3s;
+        pointer-events: none;
+      }
+      .toast.show {
+        transform: translateX(-50%) translateY(0);
+      }
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0c1810;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #245c38;
+        border-radius: 2px;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
+      @keyframes twinkle {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background: #18301e;
+        outline: none;
+        border: none;
+        cursor: pointer;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #3ea066;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <div class="top">
+        <div class="logo">
+          <div class="logo-icon">🌙</div>
+          <span class="logo-text">نور الريلز</span>
+        </div>
+        <div class="tabs">
+          <div class="tab on" onclick="switchTab('sheikh')">🎙 الشيوخ</div>
+          <div class="tab" onclick="switchTab('surah')">📖 السور</div>
+          <div class="tab" onclick="switchTab('bg')">🖼 الخلفيات</div>
+        </div>
+        <div id="sbar">اختر شيخاً وسورة للبدء</div>
+        <button class="btn-g" onclick="startRec()">⏺ تسجيل</button>
+      </div>
+
+      <div class="main">
+        <!-- LEFT -->
+        <div class="panel left">
+          <div id="tab-sheikh">
+            <div class="sec">
+              <span class="lbl">اختر القارئ</span>
+              <div class="sh-grid" id="shGrid"></div>
+            </div>
+          </div>
+          <div id="tab-surah" style="display: none">
+            <div class="sec">
+              <span class="lbl">اختر السورة</span>
+              <input
+                class="inp"
+                type="text"
+                placeholder="ابحث..."
+                oninput="filterS(this.value)"
+              />
+              <div class="s-list" id="sList"></div>
+            </div>
+            <div class="sec">
+              <span class="lbl">نطاق الآيات</span>
+              <div class="v-range">
+                <div>
+                  <span class="flbl">من آية</span
+                  ><input
+                    class="finp"
+                    type="number"
+                    id="vFrom"
+                    value="1"
+                    min="1"
+                    onchange="onRange()"
+                  />
+                </div>
+                <div>
+                  <span class="flbl">إلى آية</span
+                  ><input
+                    class="finp"
+                    type="number"
+                    id="vTo"
+                    value="7"
+                    min="1"
+                    onchange="onRange()"
+                  />
+                </div>
+              </div>
+              <button
+                onclick="playAll()"
+                style="
+                  width: 100%;
+                  padding: 9px;
+                  background: linear-gradient(135deg, #245c38, #3ea066);
+                  border: none;
+                  border-radius: 7px;
+                  color: #fff;
+                  font-family: &quot;Cairo&quot;, sans-serif;
+                  font-size: 13px;
+                  font-weight: 700;
+                  cursor: pointer;
+                "
+              >
+                ▶ تشغيل النطاق
+              </button>
+            </div>
+            <div class="sec">
+              <span class="lbl">الآيات — انقر لتشغيل</span>
+              <div class="v-list" id="vList"></div>
+            </div>
+          </div>
+          <div id="tab-bg" style="display: none">
+            <div class="sec">
+              <span class="lbl">اختر الخلفية</span>
+              <div class="bg-grid" id="bgGrid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER -->
+        <div class="center">
+          <div class="sbar2">
+            <span style="font-size: 11px; color: #6e8878">موضع النص:</span>
+            <button class="pos-btn" onclick="setPos(this, 'top')">
+              ↑ أعلى
+            </button>
+            <button class="pos-btn on" onclick="setPos(this, 'center')">
+              ⊙ وسط
+            </button>
+            <button class="pos-btn" onclick="setPos(this, 'bottom')">
+              ↓ أسفل
+            </button>
+            <span style="margin-right: auto; font-size: 10px; color: #6e8878"
+              >9:16 مباشر</span
+            >
+          </div>
+          <div class="stage">
+            <div
+              style="
+                position: absolute;
+                width: 420px;
+                height: 420px;
+                border-radius: 50%;
+                background: radial-gradient(
+                  ellipse,
+                  rgba(36, 92, 56, 0.13),
+                  transparent 70%
+                );
+                pointer-events: none;
+              "
+            ></div>
+            <div class="phone">
+              <div
+                class="screen"
+                id="screen"
+                style="background: linear-gradient(160deg, #020d04, #071a0a)"
+              >
+                <div class="sc-geo"></div>
+                <div class="sc-glow" id="elGlow"></div>
+                <div id="elStars">
+                  <div
+                    style="
+                      position: absolute;
+                      top: 14px;
+                      left: 13px;
+                      font-size: 8px;
+                      color: rgba(200, 160, 50, 0.7);
+                      animation: twinkle 2s infinite;
+                      line-height: 1;
+                    "
+                  >
+                    ✦
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      top: 17px;
+                      left: 210px;
+                      font-size: 7px;
+                      color: rgba(200, 160, 50, 0.5);
+                      animation: twinkle 2.5s infinite 0.5s;
+                      line-height: 1;
+                    "
+                  >
+                    ✦
+                  </div>
+                  <div
+                    style="
+                      position: absolute;
+                      top: 45px;
+                      left: 12px;
+                      font-size: 6px;
+                      color: rgba(200, 160, 50, 0.4);
+                      animation: twinkle 3s infinite 1s;
+                      line-height: 1;
+                    "
+                  >
+                    ✦
+                  </div>
+                </div>
+                <div class="sc-moon" id="elMoon">🌙</div>
+                <div class="sc-bas">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+                <div class="sc-ln" style="top: 53px"></div>
+                <div
+                  class="sc-v"
+                  id="vArea"
+                  style="top: 50%; transform: translateY(-50%)"
+                >
+                  <div
+                    class="v-a"
+                    id="vAr"
+                    style="
+                      font-family: &quot;Scheherazade New&quot;, serif;
+                      font-size: 26px;
+                      color: #fff;
+                    "
+                  >
+                    اختر سورة وشيخاً
+                  </div>
+                  <div class="v-r" id="vRef"></div>
+                  <div class="v-e" id="vEn"></div>
+                </div>
+                <div class="sc-ln" style="bottom: 44px"></div>
+                <div
+                  class="sc-info"
+                  id="elSh"
+                  style="
+                    bottom: 28px;
+                    font-size: 8px;
+                    color: rgba(140, 190, 160, 0.6);
+                  "
+                ></div>
+                <div
+                  class="sc-info"
+                  id="elWm"
+                  style="
+                    bottom: 10px;
+                    font-size: 8px;
+                    color: rgba(255, 255, 255, 0.28);
+                  "
+                ></div>
+                <div class="pdot" id="pdot"></div>
+              </div>
+            </div>
+          </div>
+          <div class="player">
+            <div class="pt">
+              <div class="np-i">
+                <div class="np-t" id="npT">نور الريلز 🌙</div>
+                <div class="np-s" id="npS">اختر شيخاً وسورة للبدء</div>
+              </div>
+              <div class="pbtns">
+                <button class="pb pb-sm" onclick="prevV()">⏮</button>
+                <button class="pb pb-main" id="mBtn" onclick="togglePlay()">
+                  ▶
+                </button>
+                <button class="pb pb-sm" onclick="nextV()">⏭</button>
+              </div>
+            </div>
+            <div class="prog-r">
+              <span class="prog-t" id="tC">0:00</span>
+              <div class="prog-b" id="pBar" onclick="seek(event)">
+                <div class="prog-f" id="pF"></div>
+                <div class="prog-d" id="pD"></div>
+              </div>
+              <span class="prog-t" id="tD" style="text-align: left">0:00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="panel right">
+          <div class="sec">
+            <span class="lbl">نمط الخط</span>
+            <button
+              class="font-btn on"
+              style="font-family: &quot;Scheherazade New&quot;, serif"
+              onclick="setFont(this, 'sch')"
+            >
+              بِسْمِ اللَّهِ — عثماني
+            </button>
+            <button
+              class="font-btn"
+              style="font-family: &quot;Amiri&quot;, serif"
+              onclick="setFont(this, 'amiri')"
+            >
+              بسم الله — أميري
+            </button>
+            <button
+              class="font-btn"
+              style="font-family: &quot;Cairo&quot;, sans-serif"
+              onclick="setFont(this, 'cairo')"
+            >
+              بسم الله — كايرو
+            </button>
+          </div>
+          <div class="sec">
+            <span class="lbl">حجم الخط — <span id="fsL">26</span>px</span>
+            <input
+              id="fsR"
+              type="range"
+              min="14"
+              max="52"
+              value="26"
+              oninput="setSize(+this.value)"
+            />
+            <div class="sz-r">
+              <button class="sz-b" onclick="setSize(16)">16</button>
+              <button class="sz-b" onclick="setSize(20)">20</button>
+              <button class="sz-b on" onclick="setSize(26)">26</button>
+              <button class="sz-b" onclick="setSize(32)">32</button>
+              <button class="sz-b" onclick="setSize(40)">40</button>
+              <button class="sz-b" onclick="setSize(48)">48</button>
+            </div>
+          </div>
+          <div class="sec">
+            <span class="lbl">لون النص</span>
+            <div class="clr-r">
+              <div
+                class="clr on"
+                style="background: #fff"
+                onclick="setColor('#fff', this)"
+              ></div>
+              <div
+                class="clr"
+                style="background: #f5d990"
+                onclick="setColor('#f5d990', this)"
+              ></div>
+              <div
+                class="clr"
+                style="background: #c9973a"
+                onclick="setColor('#c9973a', this)"
+              ></div>
+              <div
+                class="clr"
+                style="background: #9ddbb8"
+                onclick="setColor('#9ddbb8', this)"
+              ></div>
+              <div
+                class="clr"
+                style="background: #aecbd8"
+                onclick="setColor('#aecbd8', this)"
+              ></div>
+              <div
+                class="clr"
+                style="background: #f4c4c4"
+                onclick="setColor('#f4c4c4', this)"
+              ></div>
+            </div>
+          </div>
+          <div class="sec">
+            <span class="lbl">التأثيرات</span>
+            <div class="sw-row" onclick="toggleFx('moon')">
+              <span class="sw-l">🌙 هلال متحرك</span>
+              <div
+                class="sw"
+                id="sw-moon"
+                style="
+                  background: linear-gradient(135deg, #245c38, #3ea066);
+                  border: 1px solid rgba(62, 160, 102, 0.4);
+                "
+              >
+                <div class="sw-k" style="right: 3px"></div>
+              </div>
+            </div>
+            <div class="sw-row" onclick="toggleFx('stars')">
+              <span class="sw-l">✦ نجوم لامعة</span>
+              <div
+                class="sw"
+                id="sw-stars"
+                style="
+                  background: linear-gradient(135deg, #245c38, #3ea066);
+                  border: 1px solid rgba(62, 160, 102, 0.4);
+                "
+              >
+                <div class="sw-k" style="right: 3px"></div>
+              </div>
+            </div>
+            <div class="sw-row" onclick="toggleFx('glow')">
+              <span class="sw-l">🌟 هالة نورانية</span>
+              <div
+                class="sw"
+                id="sw-glow"
+                style="
+                  background: linear-gradient(135deg, #245c38, #3ea066);
+                  border: 1px solid rgba(62, 160, 102, 0.4);
+                "
+              >
+                <div class="sw-k" style="right: 3px"></div>
+              </div>
+            </div>
+            <div class="sw-row" onclick="toggleFx('trans')">
+              <span class="sw-l">🌐 ترجمة إنجليزية</span>
+              <div
+                class="sw"
+                id="sw-trans"
+                style="
+                  background: linear-gradient(135deg, #245c38, #3ea066);
+                  border: 1px solid rgba(62, 160, 102, 0.4);
+                "
+              >
+                <div class="sw-k" style="right: 3px"></div>
+              </div>
+            </div>
+          </div>
+          <div class="sec">
+            <span class="lbl">علامة مائية</span>
+            <input
+              type="text"
+              class="inp"
+              placeholder="@قناتك"
+              oninput="document.getElementById('elWm').textContent = this.value"
+            />
+          </div>
+          <div class="sec">
+            <span class="lbl">التصدير</span>
+            <!-- تصدير حقيقي بـ Canvas + MediaRecorder -->
+            <div
+              style="
+                background: rgba(201, 151, 58, 0.06);
+                border: 1px solid rgba(201, 151, 58, 0.18);
+                border-radius: 10px;
+                padding: 11px 12px;
+                margin-bottom: 8px;
+              "
+            >
+              <div style="font-size: 11px; color: #b5c4bc; line-height: 1.8">
+                <div
+                  style="font-weight: 700; color: #e4b55a; margin-bottom: 6px"
+                >
+                  📹 تصدير فيديو حقيقي
+                </div>
+                <div>١. اضغط <b style="color: #5ec285">ابدأ التسجيل</b></div>
+                <div>
+                  ٢. اضغط <b style="color: #fff">▶ تشغيل</b> من الـ Player
+                </div>
+                <div>٣. انتظر تشغيل الآيات</div>
+                <div>٤. اضغط <b style="color: #f47c7c">أوقف وحمّل</b></div>
+              </div>
+            </div>
+            <button
+              id="recBtn"
+              onclick="startRec()"
+              style="
+                width: 100%;
+                padding: 11px;
+                background: linear-gradient(135deg, #245c38, #3ea066);
+                border: none;
+                border-radius: 10px;
+                color: #fff;
+                font-family: &quot;Cairo&quot;, sans-serif;
+                font-size: 14px;
+                font-weight: 700;
+                cursor: pointer;
+                box-shadow: 0 4px 14px rgba(36, 92, 56, 0.35);
+                margin-bottom: 6px;
+              "
+            >
+              ⏺ ابدأ التسجيل
+            </button>
+            <button
+              id="stopBtn"
+              onclick="stopRec()"
+              style="
+                width: 100%;
+                padding: 11px;
+                background: linear-gradient(135deg, #5c2424, #a03030);
+                border: none;
+                border-radius: 10px;
+                color: #fff;
+                font-family: &quot;Cairo&quot;, sans-serif;
+                font-size: 14px;
+                font-weight: 700;
+                cursor: pointer;
+                display: none;
+                margin-bottom: 6px;
+              "
+            >
+              ⏹ أوقف وحمّل MP4
+            </button>
+            <div
+              id="recStatus"
+              style="
+                display: none;
+                font-size: 11px;
+                text-align: center;
+                padding: 7px;
+                border-radius: 8px;
+                background: rgba(94, 194, 133, 0.1);
+                border: 1px solid rgba(94, 194, 133, 0.3);
+                color: #5ec285;
+              "
+            >
+              ⏺ جارٍ التسجيل... <span id="recTimer">0:00</span>
+            </div>
+            <div
+              id="recNote"
+              style="
+                margin-top: 8px;
+                font-size: 10px;
+                color: #6e8878;
+                line-height: 1.7;
+                display: none;
+              "
+            >
+              ⚠ المتصفح سيطلب إذن مشاركة الشاشة — اختر نافذة التطبيق
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <audio id="audio" preload="auto"></audio>
+
+    <script>
+      /* ══ DATA ══ */
+      // everyayah.com — مؤكد من نتائج البحث المباشرة
+      // URL: https://everyayah.com/data/{folder}/SSSAAA.mp3
+      const SHUYUKH = [
+        {
+          folder: "Alafasy_128kbps",
+          name: "مشاري العفاسي",
+          flag: "🇰🇼",
+          country: "الكويت",
+        },
+        {
+          folder: "Abu_Bakr_Ash-Shaatree_128kbps",
+          name: "أبو بكر الشاطري",
+          flag: "🇩🇿",
+          country: "الجزائر",
+        },
+        {
+          folder: "Maher_AlMuaiqly_128kbps",
+          name: "ماهر المعيقلي",
+          flag: "🇸🇦",
+          country: "السعودية",
+        },
+        {
+          folder: "Abdurrahmaan_As-Sudais_192kbps",
+          name: "عبدالرحمن السديس",
+          flag: "🇸🇦",
+          country: "السعودية",
+        },
+        {
+          folder: "Husary_128kbps",
+          name: "محمود الحصري",
+          flag: "🇪🇬",
+          country: "مصر",
+        },
+        {
+          folder: "Minshawy_Murattal_128kbps",
+          name: "محمد المنشاوي",
+          flag: "🇪🇬",
+          country: "مصر",
+        },
+        {
+          folder: "Abdul_Basit_Murattal_192kbps",
+          name: "عبد الباسط مرتل",
+          flag: "🇪🇬",
+          country: "مصر",
+        },
+        {
+          folder: "Abdullah_Basfar_192kbps",
+          name: "عبدالله بصفر",
+          flag: "🇸🇦",
+          country: "السعودية",
+        },
+      ];
+
+      const SURAHS = [
+        { n: 1, ar: "الفاتحة", v: 7 },
+        { n: 2, ar: "البقرة", v: 286 },
+        { n: 3, ar: "آل عمران", v: 200 },
+        { n: 4, ar: "النساء", v: 176 },
+        { n: 5, ar: "المائدة", v: 120 },
+        { n: 6, ar: "الأنعام", v: 165 },
+        { n: 7, ar: "الأعراف", v: 206 },
+        { n: 8, ar: "الأنفال", v: 75 },
+        { n: 9, ar: "التوبة", v: 129 },
+        { n: 10, ar: "يونس", v: 109 },
+        { n: 11, ar: "هود", v: 123 },
+        { n: 12, ar: "يوسف", v: 111 },
+        { n: 13, ar: "الرعد", v: 43 },
+        { n: 14, ar: "إبراهيم", v: 52 },
+        { n: 15, ar: "الحجر", v: 99 },
+        { n: 16, ar: "النحل", v: 128 },
+        { n: 17, ar: "الإسراء", v: 111 },
+        { n: 18, ar: "الكهف", v: 110 },
+        { n: 19, ar: "مريم", v: 98 },
+        { n: 20, ar: "طه", v: 135 },
+        { n: 21, ar: "الأنبياء", v: 112 },
+        { n: 22, ar: "الحج", v: 78 },
+        { n: 23, ar: "المؤمنون", v: 118 },
+        { n: 24, ar: "النور", v: 64 },
+        { n: 25, ar: "الفرقان", v: 77 },
+        { n: 26, ar: "الشعراء", v: 227 },
+        { n: 27, ar: "النمل", v: 93 },
+        { n: 28, ar: "القصص", v: 88 },
+        { n: 29, ar: "العنكبوت", v: 69 },
+        { n: 30, ar: "الروم", v: 60 },
+        { n: 31, ar: "لقمان", v: 34 },
+        { n: 32, ar: "السجدة", v: 30 },
+        { n: 33, ar: "الأحزاب", v: 73 },
+        { n: 34, ar: "سبأ", v: 54 },
+        { n: 35, ar: "فاطر", v: 45 },
+        { n: 36, ar: "يس", v: 83 },
+        { n: 37, ar: "الصافات", v: 182 },
+        { n: 38, ar: "ص", v: 88 },
+        { n: 39, ar: "الزمر", v: 75 },
+        { n: 40, ar: "غافر", v: 85 },
+        { n: 41, ar: "فصلت", v: 54 },
+        { n: 42, ar: "الشورى", v: 53 },
+        { n: 43, ar: "الزخرف", v: 89 },
+        { n: 44, ar: "الدخان", v: 59 },
+        { n: 45, ar: "الجاثية", v: 37 },
+        { n: 46, ar: "الأحقاف", v: 35 },
+        { n: 47, ar: "محمد", v: 38 },
+        { n: 48, ar: "الفتح", v: 29 },
+        { n: 49, ar: "الحجرات", v: 18 },
+        { n: 50, ar: "ق", v: 45 },
+        { n: 51, ar: "الذاريات", v: 60 },
+        { n: 52, ar: "الطور", v: 49 },
+        { n: 53, ar: "النجم", v: 62 },
+        { n: 54, ar: "القمر", v: 55 },
+        { n: 55, ar: "الرحمن", v: 78 },
+        { n: 56, ar: "الواقعة", v: 96 },
+        { n: 57, ar: "الحديد", v: 29 },
+        { n: 58, ar: "المجادلة", v: 22 },
+        { n: 59, ar: "الحشر", v: 24 },
+        { n: 60, ar: "الممتحنة", v: 13 },
+        { n: 61, ar: "الصف", v: 14 },
+        { n: 62, ar: "الجمعة", v: 11 },
+        { n: 63, ar: "المنافقون", v: 11 },
+        { n: 64, ar: "التغابن", v: 18 },
+        { n: 65, ar: "الطلاق", v: 12 },
+        { n: 66, ar: "التحريم", v: 12 },
+        { n: 67, ar: "الملك", v: 30 },
+        { n: 68, ar: "القلم", v: 52 },
+        { n: 69, ar: "الحاقة", v: 52 },
+        { n: 70, ar: "المعارج", v: 44 },
+        { n: 71, ar: "نوح", v: 28 },
+        { n: 72, ar: "الجن", v: 28 },
+        { n: 73, ar: "المزمل", v: 20 },
+        { n: 74, ar: "المدثر", v: 56 },
+        { n: 75, ar: "القيامة", v: 40 },
+        { n: 76, ar: "الإنسان", v: 31 },
+        { n: 77, ar: "المرسلات", v: 50 },
+        { n: 78, ar: "النبأ", v: 40 },
+        { n: 79, ar: "النازعات", v: 46 },
+        { n: 80, ar: "عبس", v: 42 },
+        { n: 81, ar: "التكوير", v: 29 },
+        { n: 82, ar: "الانفطار", v: 19 },
+        { n: 83, ar: "المطففين", v: 36 },
+        { n: 84, ar: "الانشقاق", v: 25 },
+        { n: 85, ar: "البروج", v: 22 },
+        { n: 86, ar: "الطارق", v: 17 },
+        { n: 87, ar: "الأعلى", v: 19 },
+        { n: 88, ar: "الغاشية", v: 26 },
+        { n: 89, ar: "الفجر", v: 30 },
+        { n: 90, ar: "البلد", v: 20 },
+        { n: 91, ar: "الشمس", v: 15 },
+        { n: 92, ar: "الليل", v: 21 },
+        { n: 93, ar: "الضحى", v: 11 },
+        { n: 94, ar: "الشرح", v: 8 },
+        { n: 95, ar: "التين", v: 8 },
+        { n: 96, ar: "العلق", v: 19 },
+        { n: 97, ar: "القدر", v: 5 },
+        { n: 98, ar: "البينة", v: 8 },
+        { n: 99, ar: "الزلزلة", v: 8 },
+        { n: 100, ar: "العاديات", v: 11 },
+        { n: 101, ar: "القارعة", v: 11 },
+        { n: 102, ar: "التكاثر", v: 8 },
+        { n: 103, ar: "العصر", v: 3 },
+        { n: 104, ar: "الهمزة", v: 9 },
+        { n: 105, ar: "الفيل", v: 5 },
+        { n: 106, ar: "قريش", v: 4 },
+        { n: 107, ar: "الماعون", v: 7 },
+        { n: 108, ar: "الكوثر", v: 3 },
+        { n: 109, ar: "الكافرون", v: 6 },
+        { n: 110, ar: "النصر", v: 3 },
+        { n: 111, ar: "المسد", v: 5 },
+        { n: 112, ar: "الإخلاص", v: 4 },
+        { n: 113, ar: "الفلق", v: 5 },
+        { n: 114, ar: "الناس", v: 6 },
+      ];
+
+      // آيات hardcoded — كل السور الموجودة
+
+      const BGS = [
+        { l: "مسجد", e: "🕌", g: "linear-gradient(160deg,#020d04,#071a0a)" },
+        { l: "الكعبة", e: "🕋", g: "linear-gradient(160deg,#050510,#0d0d22)" },
+        { l: "ليل", e: "🌙", g: "linear-gradient(160deg,#02030e,#060820)" },
+        { l: "طبيعة", e: "🌿", g: "linear-gradient(160deg,#020a02,#071407)" },
+        { l: "غروب", e: "🌅", g: "linear-gradient(160deg,#100600,#1e0c00)" },
+        { l: "بحر", e: "🌊", g: "linear-gradient(160deg,#020a12,#051828)" },
+        { l: "ذهبي", e: "✨", g: "linear-gradient(160deg,#0c0800,#1c1200)" },
+        { l: "داكن", e: "⬛", g: "linear-gradient(160deg,#060606,#0c0c0c)" },
+      ];
+
+      /* ══ STATE ══ */
+      let S = {
+        sh: null,
+        surah: null,
+        data: [],
+        vFrom: 1,
+        vTo: 7,
+        active: 0,
+        bgIdx: 0,
+        font: "sch",
+        size: 26,
+        color: "#fff",
+        pos: "center",
+        fx: { moon: true, stars: true, glow: true, trans: true },
+        playing: false,
+      };
+
+      const audio = document.getElementById("audio");
+      const $ = (id) => document.getElementById(id);
+      const arN = (n) => String(n).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+      const fmt = (s) =>
+        !s || isNaN(s)
+          ? "0:00"
+          : `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+      const curAN = () => S.vFrom + S.active; // رقم الآية الحالية في السورة
+      const curSl = () => S.data.slice(S.vFrom - 1, S.vTo); // الـ slice الحالي
+      const curV = () => curSl()[S.active] || { ar: "", en: "" };
+      // everyayah.com: SSSAAA.mp3 (3 digits surah + 3 digits ayah)
+      const ayahUrl = (sh, sn, an) => {
+        const s = String(sn).padStart(3, "0");
+        const a = String(an).padStart(3, "0");
+        return `https://everyayah.com/data/${sh.folder}/${s}${a}.mp3`;
+      };
+
+      let toastT,
+        pendingPlay = false,
+        curUrl = "";
+
+      const toast$ = (m) => {
+        const t = $("toast");
+        t.textContent = m;
+        t.classList.add("show");
+        clearTimeout(toastT);
+        toastT = setTimeout(() => t.classList.remove("show"), 3000);
+      };
+      const setSbar = (m, c = "#6e8878") => {
+        $("sbar").textContent = m;
+        $("sbar").style.color = c;
+      };
+
+      /* ══ AUDIO ══ */
+      async function loadAudio(autoPlay = false) {
+        await loadVerse();
+        if (!S.sh || !S.surah || !S.data.length) return;
+        const url = ayahUrl(S.sh, S.surah.n, curAN());
+        if (url === curUrl && audio.readyState >= 2) {
+          if (autoPlay) doPlay();
+          return;
+        }
+        curUrl = url;
+        pendingPlay = autoPlay;
+        if (!audio.paused) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+        setSbar("⟳ جارٍ تحميل آية " + arN(curAN()) + "...", "#e4b55a");
+        $("npS").textContent = S.sh.name + " · ⟳ جارٍ التحميل...";
+        $("npS").style.color = "#e4b55a";
+        audio.src = url;
+        audio.load();
+      }
+
+      function doPlay() {
+        const p = audio.play();
+        if (p?.catch)
+          p.catch((e) => {
+            if (e.name !== "AbortError") {
+              setSbar("❌ " + e.message, "#f47c7c");
+              toast$("❌ تعذّر التشغيل");
+            }
+          });
+      }
+
+      audio.addEventListener("canplay", () => {
+        setSbar(
+          "● جاهز — " + S.surah?.ar + " (" + arN(curAN()) + ")",
+          "#5ec285",
+        );
+        $("npS").textContent = S.sh?.name + " ✅";
+        $("npS").style.color = "#5ec285";
+        if (pendingPlay) {
+          pendingPlay = false;
+          doPlay();
+        }
+      });
+      audio.addEventListener("playing", () => {
+        S.playing = true;
+        $("mBtn").innerHTML = "⏸";
+        $("mBtn").style.background = "linear-gradient(135deg,#5c2424,#a03030)";
+        $("pdot").style.display = "block";
+        setSbar("▶ " + S.surah?.ar + " — آية " + arN(curAN()), "#5ec285");
+      });
+      audio.addEventListener("pause", () => {
+        S.playing = false;
+        $("mBtn").innerHTML = "▶";
+        $("mBtn").style.background = "linear-gradient(135deg,#245c38,#3ea066)";
+        $("pdot").style.display = "none";
+      });
+      audio.addEventListener("ended", () => {
+        // انتقل للآية التالية تلقائياً
+        const sl = curSl();
+        if (S.active + 1 < sl.length) {
+          S.active++;
+          curUrl = "";
+          loadVerse();
+          updateScreen();
+          renderVList();
+          loadAudio(true);
+        } else {
+          // انتهى النطاق
+          S.playing = false;
+          S.active = 0;
+          curUrl = "";
+          $("mBtn").innerHTML = "▶";
+          $("mBtn").style.background =
+            "linear-gradient(135deg,#245c38,#3ea066)";
+          $("pdot").style.display = "none";
+          updateScreen();
+          renderVList();
+          toast$("✅ انتهت التلاوة");
+          setSbar("انتهت التلاوة ✅", "#5ec285");
+        }
+      });
+      audio.addEventListener("timeupdate", () => {
+        const d = audio.duration || 0,
+          c = audio.currentTime,
+          p = d ? (c / d) * 100 : 0;
+        $("pF").style.width = p + "%";
+        $("pD").style.left = p + "%";
+        $("tC").textContent = fmt(c);
+        $("tD").textContent = fmt(d);
+      });
+      audio.addEventListener("error", () => {
+        S.playing = false;
+        pendingPlay = false;
+        curUrl = "";
+        setSbar("❌ تعذّر تحميل الصوت", "#f47c7c");
+        $("npS").textContent = "❌ تعذّر تحميل الصوت";
+        $("npS").style.color = "#f47c7c";
+        $("mBtn").innerHTML = "▶";
+        $("mBtn").style.background = "linear-gradient(135deg,#245c38,#3ea066)";
+        $("pdot").style.display = "none";
+      });
+      audio.addEventListener("waiting", () =>
+        setSbar("⟳ جارٍ التحميل...", "#e4b55a"),
+      );
+
+      function togglePlay() {
+        if (!S.sh) {
+          toast$("⚠ اختر شيخاً أولاً");
+          return;
+        }
+        if (!S.surah) {
+          toast$("⚠ اختر سورة أولاً");
+          return;
+        }
+        if (S.playing) {
+          audio.pause();
+          return;
+        }
+        const url = ayahUrl(S.sh, S.surah.n, curAN());
+        if (url === curUrl && audio.readyState >= 2) doPlay();
+        else {
+          curUrl = "";
+          loadAudio(true);
+        }
+      }
+      function playAll() {
+        S.active = 0;
+        curUrl = "";
+        updateScreen();
+        renderVList();
+        loadAudio(true);
+      }
+      function prevV() {
+        if (S.active > 0) {
+          S.active--;
+          curUrl = "";
+          loadVerse();
+          updateScreen();
+          renderVList();
+          loadAudio(S.playing);
+        }
+      }
+      function nextV() {
+        const sl = curSl();
+        if (S.active < sl.length - 1) {
+          S.active++;
+          curUrl = "";
+          loadVerse();
+          updateScreen();
+          renderVList();
+          loadAudio(S.playing);
+        }
+      }
+      function seek(e) {
+        const r = e.currentTarget.getBoundingClientRect();
+        if (audio.duration)
+          audio.currentTime =
+            Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) *
+            audio.duration;
+      }
+
+      /* ══ RENDER ══ */
+      function renderShuyukh() {
+        $("shGrid").innerHTML = SHUYUKH.map(
+          (sh, i) => `
+    <div class="sh-card" onclick="pickSh(${i})">
+      <div class="sh-f">${sh.flag}</div>
+      <div class="sh-n">${sh.name}</div>
+      <div class="sh-c">${sh.country}</div>
+    </div>`,
+        ).join("");
+      }
+      function pickSh(i) {
+        S.sh = SHUYUKH[i];
+        document
+          .querySelectorAll(".sh-card")
+          .forEach((c, j) => c.classList.toggle("on", j === i));
+        $("elSh").textContent = "تلاوة: " + S.sh.name;
+        $("npS").style.color = "";
+        toast$("✓ " + S.sh.name);
+        if (S.surah && S.data.length) {
+          curUrl = "";
+          loadAudio(false);
+        }
+      }
+
+      function renderSurahs(list = SURAHS) {
+        $("sList").innerHTML = list
+          .map(
+            (sr) => `
+    <div class="s-item ${S.surah?.n === sr.n ? "on" : ""}" onclick="pickSurah(${sr.n})">
+      <div class="s-num">${sr.n}</div>
+      <div class="s-ar">${sr.ar}</div>
+      <div class="s-v">${sr.v}</div>
+    </div>`,
+          )
+          .join("");
+      }
+      function filterS(q) {
+        renderSurahs(
+          q
+            ? SURAHS.filter((s) => s.ar.includes(q) || String(s.n).includes(q))
+            : SURAHS,
+        );
+      }
+
+      async function pickSurah(n) {
+        const sr = SURAHS.find((s) => s.n === n);
+        if (!sr) return;
+
+        S.surah = sr;
+        S.active = 0;
+        S.vFrom = 1;
+        S.vTo = sr.v;
+
+        $("vFrom").value = 1;
+        $("vTo").value = sr.v;
+
+        S.data = Array.from({ length: sr.v });
+
+        renderSurahs();
+        renderVList();
+
+        await loadVerse();
+
+        if (S.sh) {
+          curUrl = "";
+          loadAudio(false);
+        }
+
+        toast$("✓ سورة " + sr.ar);
+        setSbar("✓ سورة " + sr.ar + " — اضغط ▶ للتشغيل", "#5ec285");
+      }
+      function onRange() {
+        if (!S.surah || !S.data.length) return;
+        S.vFrom = Math.max(1, +$("vFrom").value || 1);
+        S.vTo = Math.min(+$("vTo").value || 7, S.data.length);
+        S.active = 0;
+        curUrl = "";
+        renderVList();
+        updateScreen();
+      }
+
+      function renderVList() {
+        const sl = curSl();
+        $("vList").innerHTML = sl
+          .map(
+            (v, i) => `
+    <div class="v-item ${S.active === i ? "on" : ""}" onclick="selV(${i})">
+      <div class="v-num">${arN(S.vFrom + i)}</div>
+      <div>
+        <div class="v-ar">${v.ar}</div>
+        <div class="v-en">${v.en}</div>
+      </div>
+    </div>`,
+          )
+          .join("");
+      }
+
+      function selV(i) {
+        S.active = i;
+        curUrl = "";
+        loadVerse();
+        updateScreen();
+        renderVList();
+        if (S.sh) loadAudio(true);
+        else toast$("⚠ اختر شيخاً أولاً");
+      }
+
+      async function loadVerse() {
+        if (!S.surah) return;
+
+        const ayahNum = curAN();
+        const s = S.surah.n;
+
+        try {
+          const arRes = await fetch(
+            `https://api.alquran.cloud/v1/ayah/${s}:${ayahNum}/ar`,
+          );
+          const arData = await arRes.json();
+
+          let enText = "";
+          if (S.fx.trans) {
+            const enRes = await fetch(
+              `https://api.alquran.cloud/v1/ayah/${s}:${ayahNum}/en.sahih`,
+            );
+            const enData = await enRes.json();
+            enText = enData.data.text;
+          }
+
+          $("vAr").textContent = arData.data.text;
+          $("vRef").textContent = `﴿ ${S.surah.ar} : ${arN(ayahNum)} ﴾`;
+          $("vEn").textContent = enText;
+
+          $("npT").textContent = S.surah.ar + " — آية " + arN(ayahNum);
+        } catch {
+          $("vAr").textContent = "تعذّر جلب النص";
+        }
+      }
+
+      /* ══ SCREEN ══ */
+      function updateScreen() {
+        if (!S.surah || !S.data.length) return;
+        const v = curV();
+        $("vAr").textContent = v.ar;
+        $("vRef").textContent = `﴿ ${S.surah.ar} : ${arN(curAN())} ﴾`;
+        $("vEn").textContent = v.en;
+        $("vEn").style.display = S.fx.trans ? "block" : "none";
+        const ff =
+          S.font === "amiri"
+            ? "'Amiri',serif"
+            : S.font === "cairo"
+              ? "'Cairo',sans-serif"
+              : "'Scheherazade New',serif";
+        Object.assign($("vAr").style, {
+          fontFamily: ff,
+          fontSize: S.size + "px",
+          color: S.color,
+        });
+        const va = $("vArea");
+        if (S.pos === "top") {
+          va.style.top = "14%";
+          va.style.bottom = "auto";
+          va.style.transform = "none";
+        } else if (S.pos === "bottom") {
+          va.style.top = "auto";
+          va.style.bottom = "12%";
+          va.style.transform = "none";
+        } else {
+          va.style.top = "50%";
+          va.style.bottom = "auto";
+          va.style.transform = "translateY(-50%)";
+        }
+        $("npT").textContent = S.surah.ar + " — آية " + arN(curAN());
+      }
+
+      /* ══ CONTROLS ══ */
+      function renderBGs() {
+        $("bgGrid").innerHTML = BGS.map(
+          (b, i) => `
+    <div class="bg-t ${S.bgIdx === i ? "on" : ""}" style="background:${b.g}" onclick="pickBg(${i})">
+      ${b.e}<div class="bg-l">${b.l}</div>
+    </div>`,
+        ).join("");
+      }
+      function pickBg(i) {
+        S.bgIdx = i;
+        $("screen").style.background = BGS[i].g;
+        renderBGs();
+        toast$("✓ " + BGS[i].l);
+      }
+
+      function switchTab(t) {
+        ["sheikh", "surah", "bg"].forEach((id, i) => {
+          $("tab-" + id).style.display = id === t ? "block" : "none";
+          document.querySelectorAll(".tab")[i].classList.toggle("on", id === t);
+        });
+      }
+      function setPos(btn, p) {
+        S.pos = p;
+        document
+          .querySelectorAll(".pos-btn")
+          .forEach((b) => b.classList.remove("on"));
+        btn.classList.add("on");
+        updateScreen();
+      }
+      function setFont(btn, f) {
+        S.font = f;
+        document
+          .querySelectorAll(".font-btn")
+          .forEach((b) => b.classList.remove("on"));
+        btn.classList.add("on");
+        updateScreen();
+      }
+      function setSize(v) {
+        S.size = +v;
+        $("fsL").textContent = v;
+        $("fsR").value = v;
+        document
+          .querySelectorAll(".sz-b")
+          .forEach((b) => b.classList.toggle("on", +b.textContent === +v));
+        updateScreen();
+      }
+      function setColor(c, el) {
+        S.color = c;
+        document
+          .querySelectorAll(".clr")
+          .forEach((d) => d.classList.remove("on"));
+        el.classList.add("on");
+        updateScreen();
+      }
+
+      function toggleFx(k) {
+        S.fx[k] = !S.fx[k];
+        const on = S.fx[k];
+        const sw = $("sw-" + k);
+        sw.style.background = on
+          ? "linear-gradient(135deg,#245c38,#3ea066)"
+          : "#18301e";
+        sw.style.borderColor = on
+          ? "rgba(62,160,102,.4)"
+          : "rgba(255,255,255,.08)";
+        sw.querySelector(".sw-k").style.right = on ? "3px" : "18px";
+        const mp = { moon: "elMoon", stars: "elStars", glow: "elGlow" };
+        if (mp[k]) $(mp[k]).style.display = on ? "block" : "none";
+        if (k === "trans") updateScreen();
+      }
+
+      /* ══ REAL RECORDING — Screen Capture + Audio ══ */
+      let mediaRec = null,
+        recChunks = [],
+        recInterval = null,
+        recSecs = 0;
+
+      async function startRec() {
+        // طلب مشاركة الشاشة + الصوت من المتصفح
+        let screenStream, audioStream, combined;
+        try {
+          $("recNote").style.display = "block";
+          screenStream = await navigator.mediaDevices.getDisplayMedia({
+            video: {
+              frameRate: 30,
+              width: { ideal: 1080 },
+              height: { ideal: 1920 },
+            },
+            audio: true, // صوت النظام لو المتصفح دعمه
+          });
+        } catch (e) {
+          toast$("❌ تم إلغاء مشاركة الشاشة");
+          $("recNote").style.display = "none";
+          return;
+        }
+
+        // صوت التطبيق نفسه
+        try {
+          const dest = new AudioContext().createMediaStreamDestination();
+          const src = new AudioContext().createMediaElementSource(audio);
+          src.connect(dest);
+          src.connect(new AudioContext().destination);
+          audioStream = dest.stream;
+        } catch (e) {
+          audioStream = null;
+        }
+
+        // دمج الستريمز
+        const tracks = [...screenStream.getTracks()];
+        if (audioStream) tracks.push(...audioStream.getTracks());
+        combined = new MediaStream(tracks);
+
+        // ابدأ التسجيل
+        recChunks = [];
+        const mimeType = MediaRecorder.isTypeSupported("video/webm;codecs=vp9")
+          ? "video/webm;codecs=vp9"
+          : "video/webm";
+        mediaRec = new MediaRecorder(combined, {
+          mimeType,
+          videoBitsPerSecond: 4000000,
+        });
+        mediaRec.ondataavailable = (e) => {
+          if (e.data.size > 0) recChunks.push(e.data);
+        };
+        mediaRec.onstop = downloadRec;
+        mediaRec.start(500);
+
+        // UI
+        $("recBtn").style.display = "none";
+        $("stopBtn").style.display = "block";
+        $("recStatus").style.display = "block";
+        $("recNote").style.display = "none";
+        recSecs = 0;
+        recInterval = setInterval(() => {
+          recSecs++;
+          $("recTimer").textContent = fmt(recSecs);
+        }, 1000);
+        toast$("⏺ بدأ التسجيل — اضغط ▶ الآن");
+
+        // لو انتهى المستخدم من مشاركة الشاشة
+        screenStream.getTracks()[0].onended = () => stopRec();
+      }
+
+      function stopRec() {
+        if (!mediaRec || mediaRec.state === "inactive") return;
+        mediaRec.stop();
+        clearInterval(recInterval);
+        $("recBtn").style.display = "block";
+        $("stopBtn").style.display = "none";
+        $("recStatus").style.display = "none";
+        toast$("⟳ جارٍ تجهيز الملف...");
+      }
+
+      function downloadRec() {
+        const blob = new Blob(recChunks, { type: "video/webm" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const name = `نور-الريلز-${S.surah?.ar || "قرآن"}-${new Date().toISOString().slice(0, 10)}.webm`;
+        a.href = url;
+        a.download = name;
+        a.click();
+        URL.revokeObjectURL(url);
+        toast$("✅ تم حفظ الفيديو: " + name);
+        setSbar("✅ تم حفظ الفيديو في مجلد التنزيلات", "#5ec285");
+      }
+
+      /* ══ INIT ══ */
+      renderShuyukh();
+      renderSurahs();
+      renderBGs();
+      // اختر الفاتحة افتراضياً
+      pickSurah(1);
+    </script>
+  </body>
+</html>
