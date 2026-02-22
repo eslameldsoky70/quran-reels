@@ -1149,7 +1149,7 @@
         ]);
 
         const recorder = new MediaRecorder(combined, {
-          mimeType: "video/webm;codecs=vp9",
+          mimeType: "video/webm",
           videoBitsPerSecond: 8000000,
         });
 
@@ -1159,7 +1159,6 @@
 
         recorder.onstop = async () => {
           const webmBlob = new Blob(chunks, { type: "video/webm" });
-
           const mp4Blob = await convertToMP4(webmBlob);
 
           const url = URL.createObjectURL(mp4Blob);
@@ -1170,23 +1169,24 @@
         };
 
         recorder.start();
+
+        // تصوير الشاشة 30 فريم بالثانية
+        const interval = setInterval(drawFrame, 1000 / 30);
+
         audio.play();
 
-        audio.onended = () => recorder.stop();
+        audio.onended = () => {
+          clearInterval(interval);
+          recorder.stop();
+        };
       }
-      function drawFrame() {
-        ctx.fillStyle = "#000";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      async function drawFrame() {
+        const el = document.getElementById("screen");
 
-        ctx.drawImage(
-          document.querySelector(".screen"),
-          0,
-          0,
-          canvas.width,
-          canvas.height,
-        );
+        const imgCanvas = await html2canvas(el);
 
-        requestAnimationFrame(drawFrame);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(imgCanvas, 0, 0, canvas.width, canvas.height);
       }
       const canvas = document.createElement("canvas");
       canvas.width = 1080;
