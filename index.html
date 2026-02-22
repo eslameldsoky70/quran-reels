@@ -1410,6 +1410,7 @@
         sh: null,
         surah: null,
         data: [],
+        basmalaMode: false,
         vFrom: 1,
         vTo: 7,
         active: 0,
@@ -1513,17 +1514,26 @@
         $("mBtn").style.background = "linear-gradient(135deg,#245c38,#3ea066)";
         $("pdot").style.display = "none";
       });
-      audio.addEventListener("ended", () => {
-        // انتقل للآية التالية تلقائياً
+      audio.addEventListener("ended", async () => {
+        // لو كانت البسملة هي التي تعمل
+        if (S.basmalaMode) {
+          S.basmalaMode = false; // انتهت البسملة
+          S.active = 0; // ابدأ السورة من آيتها الأولى
+          curUrl = "";
+          await loadAudio(true); // شغّل أول آية في السورة
+          return;
+        }
+
+        // التشغيل الطبيعي للآيات
         const sl = curSl();
+
         if (S.active + 1 < sl.length) {
           S.active++;
           curUrl = "";
           loadVerse();
-          loadAudio(true);
           updateScreen();
           renderVList();
-          loadAudio(true);
+          await loadAudio(true);
         } else {
           // انتهى النطاق
           S.playing = false;
@@ -1676,6 +1686,10 @@
         $("vFrom").value = 1;
         $("vTo").value = sr.v;
 
+        S.basmalaMode = true;
+        loadBasmala();
+        return;
+
         S.data = Array.from({ length: sr.v });
 
         renderSurahs();
@@ -1700,7 +1714,25 @@
         renderVList();
         updateScreen();
       }
+      async function loadBasmala() {
+        if (!S.sh) return;
 
+        // صوت البسملة دائماً 1:1
+        audio.src = ayahUrl(S.sh, 1, 1);
+        audio.load();
+
+        // جلب نص البسملة
+        try {
+          const r = await fetch("https://api.alquran.cloud/v1/ayah/1:1/ar");
+          const d = await r.json();
+          $("vAr").textContent = d.data.text;
+          $("vRef").textContent = "﴿ البسملة ﴾";
+        } catch {
+          $("vAr").textContent = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
+        }
+
+        audio.play();
+      }
       function renderVList() {
         const sl = curSl();
         $("vList").innerHTML = sl
