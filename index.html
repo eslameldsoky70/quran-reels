@@ -1515,38 +1515,30 @@
         $("pdot").style.display = "none";
       });
       audio.addEventListener("ended", async () => {
-        // لو كانت البسملة هي التي تعمل
+        // لو كانت البسملة انتهت
         if (S.basmalaMode) {
-          S.basmalaMode = false; // انتهت البسملة
+          S.basmalaMode = false; // أطفئ وضع البسملة
           S.active = 0; // ابدأ السورة من آيتها الأولى
           curUrl = "";
+
           await loadAudio(true); // شغّل أول آية في السورة
           return;
         }
 
-        // التشغيل الطبيعي للآيات
+        // الانتقال الطبيعي بين الآيات
         const sl = curSl();
 
         if (S.active + 1 < sl.length) {
           S.active++;
           curUrl = "";
+
           loadVerse();
           updateScreen();
           renderVList();
+
           await loadAudio(true);
         } else {
-          // انتهى النطاق
           S.playing = false;
-          S.active = 0;
-          curUrl = "";
-          $("mBtn").innerHTML = "▶";
-          $("mBtn").style.background =
-            "linear-gradient(135deg,#245c38,#3ea066)";
-          $("pdot").style.display = "none";
-          updateScreen();
-          renderVList();
-          toast$("✅ انتهت التلاوة");
-          setSbar("انتهت التلاوة ✅", "#5ec285");
         }
       });
       audio.addEventListener("timeupdate", () => {
@@ -1717,20 +1709,13 @@
       async function loadBasmala() {
         if (!S.sh) return;
 
-        // صوت البسملة دائماً 1:1
+        // عرض نص البسملة
+        $("vAr").textContent = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
+        $("vRef").textContent = "﴿ البسملة ﴾";
+
+        // تشغيل صوت 1:1
         audio.src = ayahUrl(S.sh, 1, 1);
         audio.load();
-
-        // جلب نص البسملة
-        try {
-          const r = await fetch("https://api.alquran.cloud/v1/ayah/1:1/ar");
-          const d = await r.json();
-          $("vAr").textContent = d.data.text;
-          $("vRef").textContent = "﴿ البسملة ﴾";
-        } catch {
-          $("vAr").textContent = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
-        }
-
         audio.play();
       }
       function renderVList() {
