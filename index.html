@@ -733,6 +733,8 @@
     </style>
   </head>
   <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
   <body>
     <div class="app">
       <div class="top">
@@ -1222,6 +1224,60 @@
     <audio id="audio" preload="auto"></audio>
 
     <script>
+      async function startExport() {
+        const stream = canvas.captureStream(30);
+
+        const audioCtx = new AudioContext();
+        const source = audioCtx.createMediaElementSource(audio);
+        const dest = audioCtx.createMediaStreamDestination();
+
+        source.connect(dest);
+        source.connect(audioCtx.destination);
+
+        const combined = new MediaStream([
+          ...stream.getVideoTracks(),
+          ...dest.stream.getAudioTracks(),
+        ]);
+
+        const recorder = new MediaRecorder(combined, {
+          mimeType: "video/webm;codecs=vp9",
+          videoBitsPerSecond: 8000000,
+        });
+
+        let chunks = [];
+
+        recorder.ondataavailable = (e) => chunks.push(e.data);
+
+        recorder.onstop = async () => {
+          const webmBlob = new Blob(chunks, { type: "video/webm" });
+
+          const mp4Blob = await convertToMP4(webmBlob);
+
+          const url = URL.createObjectURL(mp4Blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "reel.mp4";
+          a.click();
+        };
+
+        recorder.start();
+        audio.play();
+
+        audio.onended = () => recorder.stop();
+      }
+      function drawFrame() {
+        const el = document.getElementById("screen");
+
+        html2canvas(el).then((img) => {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        });
+
+        requestAnimationFrame(drawFrame);
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = 1080;
+      canvas.height = 1920;
+      const ctx = canvas.getContext("2d");
       async function convertToMP4(videoBlob) {
         const ffmpeg = new FFmpeg.FFmpeg();
         await ffmpeg.load();
@@ -1247,7 +1303,7 @@
 
         return new Blob([data.buffer], { type: "video/mp4" });
       }
-     
+
       /* ══ DATA ══ */
       // everyayah.com — مؤكد من نتائج البحث المباشرة
       // URL: https://everyayah.com/data/{folder}/SSSAAA.mp3
@@ -1925,82 +1981,6 @@
         recChunks = [],
         recInterval = null,
         recSecs = 0;
-
-      async function startRec() {
-        // طلب مشاركة الشاشة + الصوت من المتصفح
-        let screenStream, audioStream, combined;
-        try {
-          $("recNote").style.display = "block";
-          screenStream = await navigator.mediaDevices.getDisplayMedia({
-            video: {
-              frameRate: 30,
-              width: { ideal: 1080 },
-              height: { ideal: 1920 },
-            },
-            audio: true, // صوت النظام لو المتصفح دعمه
-          });
-        } catch (e) {
-          toast$("❌ تم إلغاء مشاركة الشاشة");
-          $("recNote").style.display = "none";
-          return;
-        }
-
-        // صوت التطبيق نفسه
-        try {
-          const dest = new AudioContext().createMediaStreamDestination();
-          const src = new AudioContext().createMediaElementSource(audio);
-          src.connect(dest);
-          src.connect(new AudioContext().destination);
-          audioStream = dest.stream;
-        } catch (e) {
-          audioStream = null;
-        }
-
-        // دمج الستريمز
-        const tracks = [...screenStream.getTracks()];
-        if (audioStream) tracks.push(...audioStream.getTracks());
-        combined = new MediaStream(tracks);
-
-        // ابدأ التسجيل
-        recChunks = [];
-        const mimeType = MediaRecorder.isTypeSupported("video/webm;codecs=vp9")
-          ? "video/webm;codecs=vp9"
-          : "video/webm";
-        mediaRec = new MediaRecorder(combined, {
-          mimeType,
-          videoBitsPerSecond: 4000000,
-        });
-        mediaRec.ondataavailable = (e) => {
-          if (e.data.size > 0) recChunks.push(e.data);
-        };
-        mediaRec.onstop = downloadRec;
-        mediaRec.start(500);
-
-        // UI
-        $("recBtn").style.display = "none";
-        $("stopBtn").style.display = "block";
-        $("recStatus").style.display = "block";
-        $("recNote").style.display = "none";
-        recSecs = 0;
-        recInterval = setInterval(() => {
-          recSecs++;
-          $("recTimer").textContent = fmt(recSecs);
-        }, 1000);
-        toast$("⏺ بدأ التسجيل — اضغط ▶ الآن");
-
-        // لو انتهى المستخدم من مشاركة الشاشة
-        screenStream.getTracks()[0].onended = () => stopRec();
-      }
-
-      function stopRec() {
-        if (!mediaRec || mediaRec.state === "inactive") return;
-        mediaRec.stop();
-        clearInterval(recInterval);
-        $("recBtn").style.display = "block";
-        $("stopBtn").style.display = "none";
-        $("recStatus").style.display = "none";
-        toast$("⟳ جارٍ تجهيز الملف...");
-      }
 
       function downloadRec() {
         const blob = new Blob(recChunks, { type: "video/webm" });
