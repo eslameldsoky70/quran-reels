@@ -1150,6 +1150,21 @@
 
     <script>
       async function startExport() {
+        if (!S.sh) {
+          toast$("اختر شيخاً أولاً");
+          return;
+        }
+
+        if (!S.surah) {
+          toast$("اختر سورة أولاً");
+          return;
+        }
+
+        if (!audio.src) {
+          toast$("شغّل التلاوة أولاً");
+          return;
+        }
+
         const stream = canvas.captureStream(30);
 
         const audioCtx = new AudioContext();
@@ -1164,16 +1179,25 @@
           ...dest.stream.getAudioTracks(),
         ]);
 
-        const recorder = new MediaRecorder(combined, {
-          mimeType: "video/webm",
-          videoBitsPerSecond: 8000000,
-        });
+        let options = { videoBitsPerSecond: 8000000 };
+
+        if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9")) {
+          options.mimeType = "video/webm;codecs=vp9";
+        } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp8")) {
+          options.mimeType = "video/webm;codecs=vp8";
+        } else {
+          options.mimeType = "video/webm";
+        }
+
+        const recorder = new MediaRecorder(combined, options);
 
         let chunks = [];
 
         recorder.ondataavailable = (e) => chunks.push(e.data);
 
         recorder.onstop = async () => {
+          toast$("جارٍ تحويل الفيديو...");
+
           const webmBlob = new Blob(chunks, { type: "video/webm" });
           const mp4Blob = await convertToMP4(webmBlob);
 
@@ -1182,11 +1206,12 @@
           a.href = url;
           a.download = "reel.mp4";
           a.click();
+
+          toast$("تم حفظ الفيديو");
         };
 
         recorder.start();
 
-        // تصوير الشاشة 30 فريم بالثانية
         const interval = setInterval(drawFrame, 1000 / 30);
 
         audio.play();
@@ -1195,6 +1220,8 @@
           clearInterval(interval);
           recorder.stop();
         };
+
+        toast$("بدأ التصدير...");
       }
       async function drawFrame() {
         const el = document.getElementById("screen");
