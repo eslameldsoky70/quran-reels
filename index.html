@@ -732,6 +732,7 @@
       }
     </style>
   </head>
+  <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.6/dist/ffmpeg.min.js"></script>
   <body>
     <div class="app">
       <div class="top">
@@ -1221,6 +1222,42 @@
     <audio id="audio" preload="auto"></audio>
 
     <script>
+      async function convertToMP4(videoBlob) {
+        const { createFFmpeg, fetchFile } = FFmpeg;
+
+        const ffmpeg = createFFmpeg({ log: false });
+        await ffmpeg.load();
+
+        ffmpeg.FS("writeFile", "input.webm", await fetchFile(videoBlob));
+
+        await ffmpeg.run(
+          "-i",
+          "input.webm",
+          "-c:v",
+          "libx264",
+          "-preset",
+          "ultrafast",
+          "-pix_fmt",
+          "yuv420p",
+          "output.mp4",
+        );
+
+        const data = ffmpeg.FS("readFile", "output.mp4");
+
+        return new Blob([data.buffer], { type: "video/mp4" });
+      }
+      recorder.onstop = async () => {
+        const webmBlob = new Blob(chunks, { type: "video/webm" });
+
+        const mp4Blob = await convertToMP4(webmBlob);
+
+        const url = URL.createObjectURL(mp4Blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "video.mp4";
+        a.click();
+      };
       /* ══ DATA ══ */
       // everyayah.com — مؤكد من نتائج البحث المباشرة
       // URL: https://everyayah.com/data/{folder}/SSSAAA.mp3
