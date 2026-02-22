@@ -1456,50 +1456,41 @@
       };
 
       /* ══ AUDIO ══ */
-      async function loadAudio(autoPlay = false) {
-        if (!S.sh || !S.surah) return;
+     async function loadAudio(autoPlay = false) {
 
-        let surahNum;
-        let ayahNum;
+  if (!S.sh || !S.surah) return;
 
-        // لو active = -1 → نشغل البسملة
-        if (S.active === -1) {
-          surahNum = 1;
-          ayahNum = 1;
+  let surahNum;
+  let ayahNum;
 
-          $("vAr").textContent = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
-          $("vRef").textContent = "﴿ البسملة ﴾";
-          $("vEn").textContent = "";
-          $("npT").textContent = "البسملة";
-        } else {
-          surahNum = S.surah.n;
-          ayahNum = curAN();
+  if (S.active === -1) {
 
-          await loadVerse();
-        }
+    surahNum = 1;
+    ayahNum  = 1;
 
-        const url = ayahUrl(S.sh, surahNum, ayahNum);
+    $("vAr").textContent =
+      "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
+    $("vRef").textContent = "﴿ البسملة ﴾";
+    $("vEn").textContent  = "";
+    $("npT").textContent  = "البسملة";
 
-        if (url === curUrl && audio.readyState >= 2) {
-          if (autoPlay) doPlay();
-          return;
-        }
+  } else {
 
-        curUrl = url;
-        pendingPlay = autoPlay;
+    surahNum = S.surah.n;
+    ayahNum  = curAN();
 
-        if (!audio.paused) {
-          audio.pause();
-          audio.currentTime = 0;
-        }
+    loadVerse(); // بدون await
+  }
 
-        setSbar("⟳ جارٍ تحميل آية " + arN(ayahNum) + "...", "#e4b55a");
-        $("npS").textContent = S.sh.name + " · ⟳ جارٍ التحميل...";
-        $("npS").style.color = "#e4b55a";
+  const url = ayahUrl(S.sh, surahNum, ayahNum);
 
-        audio.src = url;
-        audio.load();
-      }
+  if (url === curUrl) return;
+
+  curUrl = url;
+
+  audio.src = url;   // غير المصدر مباشرة
+  if (autoPlay) audio.play();
+}
       function doPlay() {
         const p = audio.play();
         if (p?.catch)
