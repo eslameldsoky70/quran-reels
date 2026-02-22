@@ -1583,27 +1583,31 @@
           toast$("⚠ اختر شيخاً أولاً");
           return;
         }
+
         if (!S.surah) {
           toast$("⚠ اختر سورة أولاً");
           return;
         }
+
         if (S.playing) {
           audio.pause();
           return;
         }
-        const url = ayahUrl(S.sh, S.surah.n, curAN());
-        if (url === curUrl && audio.readyState >= 2) doPlay();
-        else {
-          curUrl = "";
-          loadAudio(true);
+
+        // لو أول تشغيل بعد اختيار السورة
+        if (S.active === 0 && !curUrl) {
+          S.active = -1; // ابدأ بالبسملة
         }
+
+        curUrl = "";
+        loadAudio(true);
       }
       function playAll() {
-        S.active = 0;
+        S.active = -1; // ابدأ بالبسملة
         curUrl = "";
+        loadAudio(true);
         updateScreen();
         renderVList();
-        loadAudio(true);
       }
       function prevV() {
         if (S.active > 0) {
