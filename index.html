@@ -1782,7 +1782,7 @@
 
       /* ══ SCREEN ══ */
       function updateScreen() {
-        if (!S.surah || !S.data.length) return;
+         if (!S.surah) return;
         const v = curV();
         $("vAr").textContent = v.ar;
         $("vRef").textContent = `﴿ ${S.surah.ar} : ${arN(curAN())} ﴾`;
