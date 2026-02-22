@@ -1520,6 +1520,7 @@
           S.active++;
           curUrl = "";
           loadVerse();
+          loadAudio(true);
           updateScreen();
           renderVList();
           loadAudio(true);
@@ -1684,7 +1685,7 @@
 
         if (S.sh) {
           curUrl = "";
-          loadAudio(false);
+          loadAudio(true);
         }
 
         toast$("✓ سورة " + sr.ar);
