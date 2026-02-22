@@ -1410,7 +1410,6 @@
         sh: null,
         surah: null,
         data: [],
-        basmalaMode: false,
         vFrom: 1,
         vTo: 7,
         active: 0,
@@ -1458,26 +1457,44 @@
 
       /* ══ AUDIO ══ */
       async function loadAudio(autoPlay = false) {
-        await loadVerse();
-        if (!S.sh || !S.surah || !S.data.length) return;
-        const url = ayahUrl(S.sh, S.surah.n, curAN());
+        if (!S.sh || !S.surah) return;
+
+        let surahNum = S.surah.n;
+        let ayahNum = curAN();
+
+        // لو أول تشغيل → نشغل البسملة
+        if (S.active === 0) {
+          surahNum = 1;
+          ayahNum = 1;
+
+          $("vAr").textContent = "بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ";
+          $("vRef").textContent = "﴿ البسملة ﴾";
+        } else {
+          await loadVerse(); // تحميل نص الآية العادية
+        }
+
+        const url = ayahUrl(S.sh, surahNum, ayahNum);
+
         if (url === curUrl && audio.readyState >= 2) {
           if (autoPlay) doPlay();
           return;
         }
+
         curUrl = url;
         pendingPlay = autoPlay;
+
         if (!audio.paused) {
           audio.pause();
           audio.currentTime = 0;
         }
-        setSbar("⟳ جارٍ تحميل آية " + arN(curAN()) + "...", "#e4b55a");
+
+        setSbar("⟳ جارٍ تحميل آية " + arN(ayahNum) + "...", "#e4b55a");
         $("npS").textContent = S.sh.name + " · ⟳ جارٍ التحميل...";
         $("npS").style.color = "#e4b55a";
+
         audio.src = url;
         audio.load();
       }
-
       function doPlay() {
         const p = audio.play();
         if (p?.catch)
@@ -1515,20 +1532,6 @@
         $("pdot").style.display = "none";
       });
       audio.addEventListener("ended", () => {
-        // لو كانت البسملة انتهت
-        if (S.basmalaMode) {
-          S.basmalaMode = false; // أطفئ وضع البسملة
-          S.active = 0; // ابدأ من أول آية في السورة
-          curUrl = "";
-
-          loadVerse();
-          updateScreen();
-          renderVList();
-
-          loadAudio(true); // شغّل السورة فوراً
-          return;
-        }
-
         // الانتقال الطبيعي بين الآيات
         const sl = curSl();
 
@@ -1670,36 +1673,24 @@
         );
       }
 
-      async function pickSurah(n) {
+      function pickSurah(n) {
         const sr = SURAHS.find((s) => s.n === n);
         if (!sr) return;
 
         S.surah = sr;
+
+        S.vFrom = 0; // نبدأ من 0
         S.active = 0;
-        S.vFrom = 1;
-        S.vTo = sr.v;
+
+        S.vTo = sr.v; // عدد آيات السورة الحقيقي
 
         $("vFrom").value = 1;
         $("vTo").value = sr.v;
 
-        S.basmalaMode = true;
-        loadBasmala();
-        return;
-
-        S.data = Array.from({ length: sr.v });
-
         renderSurahs();
         renderVList();
 
-        await loadVerse();
-
-        if (S.sh) {
-          curUrl = "";
-          loadAudio(true);
-        }
-
-        toast$("✓ سورة " + sr.ar);
-        setSbar("✓ سورة " + sr.ar + " — اضغط ▶ للتشغيل", "#5ec285");
+        loadAudio(true);
       }
       function onRange() {
         if (!S.surah || !S.data.length) return;
