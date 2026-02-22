@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نور الريلز 🌙</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:'Cairo',sans-serif;background:#070e09;color:#f0ebe1;direction:rtl}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpolygon points='60,3 72,42 110,42 80,65 90,104 60,82 30,104 40,65 10,42 48,42' fill='none' stroke='%23c9973a' stroke-width='1'/%3E%3C/svg%3E")}
+.app{display:grid;grid-template-rows:54px 1fr;height:100vh;position:relative;z-index:1}
+.main{display:grid;grid-template-columns:280px 1fr 265px;overflow:hidden}
+.top{background:rgba(7,14,9,.98);border-bottom:1px solid rgba(201,151,58,.15);display:flex;align-items:center;padding:0 16px;gap:10px}
+.logo-ball{width:33px;height:33px;border-radius:50%;background:linear-gradient(135deg,#245c38,#3ea066);display:flex;align-items:center;justify-content:center;font-size:16px}
+.logo-name{font-family:'Amiri',serif;font-size:19px;color:#e4b55a;margin-right:9px}
+.ttab{padding:5px 13px;border-radius:100px;font-size:12px;cursor:pointer;border:1px solid rgba(255,255,255,.07);background:transparent;color:#6e8878;font-family:'Cairo',sans-serif;transition:.2s}
+.ttab.on{border-color:rgba(201,151,58,.5);background:rgba(201,151,58,.1);color:#e4b55a}
+#statusBar{font-size:11px;padding:4px 12px;border-radius:100px;transition:.3s}
+.panel{background:#0c1810;overflow-y:auto}
+.left{border-left:1px solid rgba(201,151,58,.13)}
+.right{border-right:1px solid rgba(201,151,58,.13)}
+.psec{padding:13px 14px;border-bottom:1px solid rgba(201,151,58,.1)}
+.plbl{font-size:10px;letter-spacing:2px;color:#6e8878;text-transform:uppercase;display:block;margin-bottom:10px}
+.sh-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.sh-card{border:1px solid rgba(201,151,58,.1);border-radius:12px;padding:10px 8px;cursor:pointer;text-align:center;background:#112016;transition:.2s}
+.sh-card:hover{border-color:rgba(201,151,58,.4)}
+.sh-card.on{border-color:rgba(201,151,58,.7);background:rgba(201,151,58,.08)}
+.sh-card.on .sh-name{color:#e4b55a}
+.sh-flag{font-size:22px;margin-bottom:5px}
+.sh-name{font-size:11px;color:#b5c4bc;line-height:1.3;font-weight:600}
+.sh-country{font-size:9px;color:#6e8878;margin-top:2px}
+.s-search{width:100%;background:#18301e;border:1px solid rgba(201,151,58,.15);border-radius:8px;color:#f0ebe1;font-family:'Cairo',sans-serif;font-size:13px;padding:8px 12px;outline:none;margin-bottom:8px}
+.s-list{max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:3px}
+.s-item{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:.18s}
+.s-item:hover{background:#18301e}
+.s-item.on{background:rgba(201,151,58,.08);border-color:rgba(201,151,58,.35)}
+.s-num{width:24px;height:24px;border-radius:50%;background:#18301e;border:1px solid rgba(201,151,58,.2);display:flex;align-items:center;justify-content:center;font-size:10px;color:#c9973a;flex-shrink:0}
+.s-ar{font-family:'Scheherazade New',serif;font-size:17px;flex:1}
+.s-v{font-size:10px;color:#6e8878}
+.v-range{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.flbl{font-size:10px;color:#6e8878;display:block;margin-bottom:4px}
+.finp{width:100%;background:#18301e;border:1px solid rgba(201,151,58,.2);border-radius:8px;color:#f0ebe1;font-family:'Cairo',sans-serif;font-size:15px;padding:8px;outline:none;text-align:center}
+.v-list{display:flex;flex-direction:column;gap:5px;max-height:280px;overflow-y:auto}
+.v-item{padding:9px 11px;border-radius:10px;cursor:pointer;border:1px solid rgba(255,255,255,.05);background:#112016;transition:.18s;display:flex;gap:8px;align-items:flex-start}
+.v-item:hover,.v-item.on{border-color:rgba(201,151,58,.5);background:rgba(201,151,58,.07)}
+.v-num{font-size:10px;color:#c9973a;font-weight:700;padding-top:4px;flex-shrink:0;min-width:16px}
+.v-ar{font-family:'Scheherazade New',serif;font-size:14px;line-height:2;color:#f0ebe1}
+.v-en{font-size:9px;color:#6e8878;margin-top:1px;line-height:1.5}
+.v-loading{padding:20px;text-align:center;color:#6e8878;font-size:12px}
+.bg-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.bg-thumb{aspect-ratio:9/16;border-radius:10px;border:2px solid rgba(255,255,255,.07);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.2s;font-size:20px}
+.bg-thumb.on{border-color:#c9973a;box-shadow:0 0 14px rgba(201,151,58,.3)}
+.bg-lbl{font-size:9px;color:#b5c4bc;margin-top:4px}
+.center{background:#070e09;display:flex;flex-direction:column;overflow:hidden}
+.stage-bar{padding:8px 16px;border-bottom:1px solid rgba(201,151,58,.1);display:flex;align-items:center;gap:8px;background:rgba(7,14,9,.8);flex-shrink:0}
+.pos-btn{padding:4px 14px;border-radius:100px;font-size:12px;border:1px solid rgba(255,255,255,.07);background:transparent;color:#6e8878;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s}
+.pos-btn.on{border-color:rgba(201,151,58,.5);background:rgba(201,151,58,.1);color:#e4b55a}
+.stage{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;overflow:hidden;position:relative}
+.phone{width:252px;height:448px;border-radius:40px;border:2px solid rgba(255,255,255,.1);background:#000;box-shadow:0 40px 80px rgba(0,0,0,.85),0 0 50px rgba(36,92,56,.22);position:relative;overflow:hidden;flex-shrink:0}
+.screen{position:absolute;inset:7px;border-radius:35px;overflow:hidden}
+.s-geo{position:absolute;inset:0;opacity:.04;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Ccircle cx='35' cy='35' r='30' fill='none' stroke='%23c9973a' stroke-width='.7'/%3E%3C/svg%3E")}
+.s-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(36,92,56,.28),transparent 70%);pointer-events:none}
+.s-moon{position:absolute;top:13px;width:100%;text-align:center;font-size:19px;opacity:.75;animation:float 3.5s ease-in-out infinite}
+.s-basmala{position:absolute;top:42px;width:100%;text-align:center;font-family:'Scheherazade New',serif;font-size:11px;color:rgba(200,160,50,.85)}
+.s-line{position:absolute;right:16px;left:16px;height:1px;background:linear-gradient(to left,transparent,rgba(200,160,50,.4),transparent)}
+.s-verse{position:absolute;right:12px;left:12px;z-index:2;text-align:center;transition:.4s all}
+.v-ara{line-height:2.1;text-shadow:0 2px 14px rgba(0,0,0,.95);direction:rtl;transition:.3s}
+.v-ref{margin-top:7px;font-size:9.5px;color:rgba(200,160,50,.9);font-family:'Cairo',sans-serif}
+.v-eng{margin-top:5px;font-size:9px;color:rgba(180,200,190,.8);line-height:1.65;direction:ltr}
+.s-sheikh{position:absolute;bottom:32px;width:100%;text-align:center;font-size:8.5px;color:rgba(140,190,160,.6);font-family:'Cairo',sans-serif}
+.s-wm{position:absolute;bottom:12px;width:100%;text-align:center;font-size:8.5px;color:rgba(255,255,255,.3);font-family:'Cairo',sans-serif}
+.play-dot{position:absolute;top:12px;right:12px;width:8px;height:8px;border-radius:50%;background:#5ec285;box-shadow:0 0 6px #5ec285;animation:twinkle 1s ease-in-out infinite;display:none}
+.player{background:#0c1810;border-top:1px solid rgba(201,151,58,.12);padding:12px 20px;flex-shrink:0}
+.player-top{display:flex;align-items:center;gap:12px;margin-bottom:9px}
+.pbtn{border-radius:50%;border:1px solid rgba(201,151,58,.18);background:#18301e;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;font-size:13px}
+.pbtn:hover{border-color:#3ea066}
+.pbtn-main{width:44px;height:44px;border:none !important;font-size:19px;background:linear-gradient(135deg,#245c38,#3ea066) !important;box-shadow:0 4px 14px rgba(36,92,56,.45)}
+.pbtn-sm{width:34px;height:34px}
+.prog-row{display:flex;align-items:center;gap:10px}
+.prog-bar{flex:1;height:5px;background:#18301e;border-radius:100px;cursor:pointer;position:relative;overflow:visible}
+.prog-fill{height:100%;background:linear-gradient(to right,#c9973a,#e4b55a);border-radius:100px;width:0%;transition:.1s}
+.prog-dot{width:13px;height:13px;border-radius:50%;background:#e4b55a;position:absolute;top:-4px;left:0%;transform:translateX(-50%);box-shadow:0 0 8px rgba(201,151,58,.6);pointer-events:none;transition:.1s}
+.font-btn{width:100%;padding:9px 12px;border:1px solid rgba(255,255,255,.06);border-radius:8px;background:#112016;cursor:pointer;font-size:15px;color:#b5c4bc;margin-bottom:6px;transition:.2s;direction:rtl;text-align:right;font-family:inherit}
+.font-btn.on{border-color:rgba(201,151,58,.5);color:#f0ebe1;background:rgba(201,151,58,.07)}
+.sz-btns{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.sz-btn{padding:3px 9px;font-size:11px;border-radius:6px;border:1px solid rgba(255,255,255,.07);background:transparent;color:#6e8878;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s}
+.sz-btn.on{border-color:rgba(201,151,58,.5);background:rgba(201,151,58,.1);color:#e4b55a}
+.clr-dot{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:.18s}
+.clr-dot.on{border-color:#fff;transform:scale(1.18);box-shadow:0 0 8px rgba(255,255,255,.35)}
+.sw-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04)}
+.sw{width:38px;height:21px;border-radius:100px;position:relative;transition:.25s;flex-shrink:0}
+.sw-k{width:15px;height:15px;border-radius:50%;background:#fff;position:absolute;top:3px;transition:.25s}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(100px);background:#0c1810;border:1px solid rgba(201,151,58,.6);padding:10px 28px;border-radius:100px;font-size:13px;color:#e4b55a;z-index:9999;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.6);transition:.35s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.exp-fill{height:100%;background:linear-gradient(to right,#c9973a,#e4b55a);border-radius:100px;width:0%;transition:.15s}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:#0c1810}::-webkit-scrollbar-thumb{background:#245c38;border-radius:2px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:2px;background:#18301e;outline:none;border:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#3ea066;cursor:pointer;box-shadow:0 0 8px rgba(62,160,102,.5)}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="top">
+  <div class="logo-ball">🌙</div>
+  <span class="logo-name">نور الريلز</span>
+  <div style="display:flex;gap:4px;margin-right:14px" id="topTabs">
+    <div class="ttab on" onclick="switchTab('sheikh')">🎙 الشيوخ</div>
+    <div class="ttab"    onclick="switchTab('surah')">📖 السور</div>
+    <div class="ttab"    onclick="switchTab('bg')">🖼 الخلفيات</div>
+  </div>
+  <div id="statusBar" style="margin-right:auto;color:#6e8878"></div>
+  <button onclick="startExport()" style="padding:8px 18px;border-radius:8px;border:none;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#6b4e18,#c9973a);color:#fff">⬇ تصدير</button>
+</div>
+
+<div class="main">
+
+<!-- LEFT -->
+<div class="panel left">
+  <div id="tab-sheikh">
+    <div class="psec">
+      <span class="plbl">اختر القارئ</span>
+      <div class="sh-grid" id="shGrid"></div>
+    </div>
+  </div>
+
+  <div id="tab-surah" style="display:none">
+    <div class="psec">
+      <span class="plbl">اختر السورة</span>
+      <input class="s-search" type="text" placeholder="ابحث..." oninput="filterSurahs(this.value)">
+      <div class="s-list" id="surahList"></div>
+    </div>
+    <div class="psec">
+      <span class="plbl">نطاق الآيات</span>
+      <div class="v-range">
+        <div><span class="flbl">من آية</span><input class="finp" type="number" id="vFrom" value="1" min="1" onchange="rangeChanged()"></div>
+        <div><span class="flbl">إلى آية</span><input class="finp" type="number" id="vTo"   value="7" min="1" onchange="rangeChanged()"></div>
+      </div>
+      <button onclick="playFromStart()" style="width:100%;padding:10px;background:linear-gradient(135deg,#245c38,#3ea066);border:none;border-radius:8px;color:#fff;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer">▶ تشغيل من البداية</button>
+    </div>
+    <div class="psec">
+      <span class="plbl">الآيات</span>
+      <div class="v-list" id="vList"><div class="v-loading">اختر سورة لعرض الآيات</div></div>
+    </div>
+  </div>
+
+  <div id="tab-bg" style="display:none">
+    <div class="psec">
+      <span class="plbl">اختر الخلفية</span>
+      <div class="bg-grid" id="bgGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CENTER -->
+<div class="center">
+  <div class="stage-bar">
+    <span style="font-size:11px;color:#6e8878">النص:</span>
+    <button class="pos-btn"    onclick="setPos(this,'top')">↑ أعلى</button>
+    <button class="pos-btn on" onclick="setPos(this,'center')">⊙ وسط</button>
+    <button class="pos-btn"    onclick="setPos(this,'bottom')">↓ أسفل</button>
+    <span style="margin-right:auto;font-size:10px;color:#6e8878">معاينة · 9:16</span>
+  </div>
+  <div class="stage">
+    <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(36,92,56,.14),transparent 70%);pointer-events:none"></div>
+    <div class="phone">
+      <div class="screen" id="screen" style="background:linear-gradient(160deg,#020d04,#071a0a)">
+        <div class="s-geo"></div>
+        <div class="s-glow" id="elGlow"></div>
+        <div id="elStars">
+          <div style="position:absolute;top:16px;left:16px;font-size:9px;color:rgba(200,160,50,.7);animation:twinkle 2s ease-in-out infinite;line-height:1">✦</div>
+          <div style="position:absolute;top:20px;left:220px;font-size:8px;color:rgba(200,160,50,.5);animation:twinkle 2.5s ease-in-out infinite .5s;line-height:1">✦</div>
+          <div style="position:absolute;top:50px;left:16px;font-size:7px;color:rgba(200,160,50,.4);animation:twinkle 3s ease-in-out infinite 1s;line-height:1">✦</div>
+        </div>
+        <div class="s-moon" id="elMoon">🌙</div>
+        <div class="s-basmala">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+        <div class="s-line" style="top:58px"></div>
+        <div class="s-verse" id="verseArea" style="top:50%;transform:translateY(-50%)">
+          <div class="v-ara" id="vAr" style="font-family:'Scheherazade New',serif;font-size:26px;color:#fff"></div>
+          <div class="v-ref" id="vRef"></div>
+          <div class="v-eng" id="vEn"></div>
+        </div>
+        <div class="s-line" style="bottom:48px"></div>
+        <div class="s-sheikh" id="elSheikh"></div>
+        <div class="s-wm"    id="elWm"></div>
+        <div class="play-dot" id="playDot"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYER -->
+  <div class="player">
+    <div class="player-top">
+      <div style="flex:1;min-width:0">
+        <div id="npTitle" style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">اختر سورة وشيخاً للبدء</div>
+        <div id="npSub"   style="font-size:11px;color:#6e8878;margin-top:2px"></div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
+        <button class="pbtn pbtn-sm" onclick="prevVerse()">⏮</button>
+        <button class="pbtn pbtn-main" id="mainBtn" onclick="togglePlay()">▶</button>
+        <button class="pbtn pbtn-sm" onclick="nextVerse()">⏭</button>
+      </div>
+    </div>
+    <div class="prog-row">
+      <span id="tCur" style="font-size:11px;color:#6e8878;min-width:32px">0:00</span>
+      <div class="prog-bar" id="progBar" onclick="seekClick(event)">
+        <div class="prog-fill" id="pFill"></div>
+        <div class="prog-dot"  id="pDot"></div>
+      </div>
+      <span id="tDur" style="font-size:11px;color:#6e8878;min-width:32px;text-align:left">0:00</span>
+    </div>
+  </div>
+</div>
+
+<!-- RIGHT -->
+<div class="panel right">
+  <div class="psec">
+    <span class="plbl">نمط الخط</span>
+    <button class="font-btn on" style="font-family:'Scheherazade New',serif" onclick="setFont(this,'scheherazade')">بِسْمِ اللَّهِ — عثماني</button>
+    <button class="font-btn"    style="font-family:'Amiri',serif"            onclick="setFont(this,'amiri')">بسم الله — أميري</button>
+    <button class="font-btn"    style="font-family:'Cairo',sans-serif"       onclick="setFont(this,'cairo')">بسم الله — كايرو</button>
+  </div>
+  <div class="psec">
+    <span class="plbl">حجم الخط — <span id="fsLbl">26</span>px</span>
+    <input id="fsRange" type="range" min="14" max="54" value="26" oninput="setSize(+this.value)">
+    <div class="sz-btns">
+      <button class="sz-btn" onclick="setSize(16)">16</button>
+      <button class="sz-btn" onclick="setSize(20)">20</button>
+      <button class="sz-btn on" onclick="setSize(26)">26</button>
+      <button class="sz-btn" onclick="setSize(32)">32</button>
+      <button class="sz-btn" onclick="setSize(40)">40</button>
+      <button class="sz-btn" onclick="setSize(48)">48</button>
+    </div>
+  </div>
+  <div class="psec">
+    <span class="plbl">لون النص</span>
+    <div style="display:flex;gap:7px;flex-wrap:wrap">
+      <div class="clr-dot on" style="background:#ffffff" onclick="setColor('#ffffff',this)"></div>
+      <div class="clr-dot"    style="background:#f5d990" onclick="setColor('#f5d990',this)"></div>
+      <div class="clr-dot"    style="background:#c9973a" onclick="setColor('#c9973a',this)"></div>
+      <div class="clr-dot"    style="background:#9ddbb8" onclick="setColor('#9ddbb8',this)"></div>
+      <div class="clr-dot"    style="background:#aecbd8" onclick="setColor('#aecbd8',this)"></div>
+      <div class="clr-dot"    style="background:#f4c4c4" onclick="setColor('#f4c4c4',this)"></div>
+    </div>
+  </div>
+  <div class="psec">
+    <span class="plbl">التأثيرات</span>
+    <div class="sw-row" onclick="toggleFx('moon')">  <span style="font-size:13px;color:#b5c4bc">🌙 هلال متحرك</span>  <div class="sw on-sw" id="sw-moon"  style="background:linear-gradient(135deg,#245c38,#3ea066);border:1px solid rgba(62,160,102,.4)"><div class="sw-k" style="right:3px"></div></div></div>
+    <div class="sw-row" onclick="toggleFx('stars')"> <span style="font-size:13px;color:#b5c4bc">✦ نجوم لامعة</span>  <div class="sw on-sw" id="sw-stars" style="background:linear-gradient(135deg,#245c38,#3ea066);border:1px solid rgba(62,160,102,.4)"><div class="sw-k" style="right:3px"></div></div></div>
+    <div class="sw-row" onclick="toggleFx('glow')">  <span style="font-size:13px;color:#b5c4bc">🌟 هالة نورانية</span><div class="sw on-sw" id="sw-glow"  style="background:linear-gradient(135deg,#245c38,#3ea066);border:1px solid rgba(62,160,102,.4)"><div class="sw-k" style="right:3px"></div></div></div>
+    <div class="sw-row" onclick="toggleFx('trans')"> <span style="font-size:13px;color:#b5c4bc">🌐 الترجمة</span>     <div class="sw on-sw" id="sw-trans" style="background:linear-gradient(135deg,#245c38,#3ea066);border:1px solid rgba(62,160,102,.4)"><div class="sw-k" style="right:3px"></div></div></div>
+  </div>
+  <div class="psec">
+    <span class="plbl">علامة مائية</span>
+    <input type="text" placeholder="@قناتك" oninput="document.getElementById('elWm').textContent=this.value" style="width:100%;background:#18301e;border:1px solid rgba(201,151,58,.15);border-radius:8px;color:#f0ebe1;font-family:'Cairo',sans-serif;font-size:13px;padding:9px 12px;outline:none">
+  </div>
+  <div class="psec">
+    <span class="plbl">التصدير</span>
+    <button onclick="startExport()" style="width:100%;padding:13px;background:linear-gradient(135deg,#6b4e18,#c9973a);border:none;border-radius:12px;color:#fff;font-family:'Cairo',sans-serif;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(201,151,58,.35)">⚡ تصدير الفيديو</button>
+    <div id="expBox" style="display:none;margin-top:10px">
+      <div style="height:5px;background:#18301e;border-radius:100px;overflow:hidden"><div class="exp-fill" id="expFill"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#6e8878;margin-top:4px"><span id="expMsg">جارٍ المعالجة...</span><span id="expPct" style="color:#e4b55a">0%</span></div>
+    </div>
+  </div>
+</div>
+
+</div></div>
+<div class="toast" id="toast"></div>
+<audio id="audio" preload="none"></audio>
+
+<script>
+/* ═══ DATA ═══ */
+const SHUYUKH = [
+  // the-quran-project.github.io/Quran-Audio/Data/{id}/{surah}_{ayah}.mp3
+  {id:1, name:"مشاري العفاسي",    flag:"🇰🇼", country:"الكويت"},
+  {id:2, name:"أبو بكر الشاطري", flag:"🇩🇿", country:"الجزائر"},
+  {id:3, name:"ماهر المعيقلي",   flag:"🇸🇦", country:"السعودية"},
+  {id:4, name:"عبدالرحمن السديس",flag:"🇸🇦", country:"السعودية"},
+  {id:5, name:"محمود الحصري",    flag:"🇪🇬", country:"مصر"},
+  {id:6, name:"سعود الشريم",     flag:"🇸🇦", country:"السعودية"},
+  {id:7, name:"عبدالله بصفر",    flag:"🇸🇦", country:"السعودية"},
+  {id:8, name:"ناصر القطامي",    flag:"🇸🇦", country:"السعودية"},
+];
+
+const SURAHS = [
+  {n:1,ar:"الفاتحة",v:7},  {n:2,ar:"البقرة",v:286},{n:3,ar:"آل عمران",v:200},
+  {n:18,ar:"الكهف",v:110},{n:19,ar:"مريم",v:98},  {n:36,ar:"يس",v:83},
+  {n:55,ar:"الرحمن",v:78},{n:56,ar:"الواقعة",v:96},{n:67,ar:"الملك",v:30},
+  {n:78,ar:"النبأ",v:40}, {n:93,ar:"الضحى",v:11}, {n:94,ar:"الشرح",v:8},
+  {n:97,ar:"القدر",v:5},  {n:112,ar:"الإخلاص",v:4},{n:113,ar:"الفلق",v:5},
+  {n:114,ar:"الناس",v:6},
+];
+
+const BGS = [
+  {l:"مسجد", e:"🕌",g:"linear-gradient(160deg,#020d04,#071a0a)"},
+  {l:"الكعبة",e:"🕋",g:"linear-gradient(160deg,#050510,#0d0d22)"},
+  {l:"ليل",  e:"🌙",g:"linear-gradient(160deg,#02030e,#060820)"},
+  {l:"طبيعة",e:"🌿",g:"linear-gradient(160deg,#020a02,#071407)"},
+  {l:"غروب", e:"🌅",g:"linear-gradient(160deg,#100600,#1e0c00)"},
+  {l:"بحر",  e:"🌊",g:"linear-gradient(160deg,#020a12,#051828)"},
+  {l:"ذهبي", e:"✨",g:"linear-gradient(160deg,#0c0800,#1c1200)"},
+  {l:"داكن", e:"⬛",g:"linear-gradient(160deg,#060606,#0c0c0c)"},
+];
+
+/* ═══ STATE ═══ */
+let S = {
+  sheikh:null, surah:null,
+  verses:[], // الآيات من API
+  vFrom:1, vTo:7, activeV:0,
+  bgIdx:0, font:'scheherazade', size:26, color:'#fff',
+  pos:'center', playing:false,
+  fx:{moon:true,stars:true,glow:true,trans:true},
+};
+
+const audio = document.getElementById('audio');
+const arN   = n => String(n).replace(/\d/g, d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const fmt   = s => !s||isNaN(s) ? '0:00' : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+
+let toastT;
+const toast$ = m => {
+  const t = document.getElementById('toast');
+  t.textContent = m; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('show'), 3000);
+};
+const setStatus = (m, c='#6e8878') => {
+  const b = document.getElementById('statusBar');
+  b.textContent = m; b.style.color = c;
+};
+
+/* ═══ API — جلب الآيات ═══ */
+const verseCache = {}; // cache لتفادي طلبات متكررة
+
+async function fetchVerses(surahN) {
+  if (verseCache[surahN]) return verseCache[surahN];
+  try {
+    // quran-json CDN — نص عربي + ترجمة إنجليزية
+    const [arRes, enRes] = await Promise.all([
+      fetch(`https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/${surahN}.json`),
+      fetch(`https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/chapters/en/${surahN}.json`),
+    ]);
+    const arData = await arRes.json();
+    const enData = await enRes.json();
+    // arData = [{id, verse}, ...] , enData = [{id, verse}, ...]
+    const verses = arData.map((v, i) => ({
+      ar: v.verse,
+      en: enData[i]?.verse || '',
+    }));
+    verseCache[surahN] = verses;
+    return verses;
+  } catch(e) {
+    console.error('fetchVerses error:', e);
+    return [];
+  }
+}
+
+/* ═══ AUDIO ═══ */
+let pendingPlay = false;
+let loadedUrl   = '';
+
+function audioUrl(sheikh, surahN, ayahN) {
+  // the-quran-project GitHub Pages — مضمون بدون CORS
+  return `https://the-quran-project.github.io/Quran-Audio/Data/${sheikh.id}/${surahN}_${ayahN}.mp3`;
+}
+
+function loadAndPlay(autoPlay=false) {
+  if (!S.sheikh || !S.surah || !S.verses.length) return;
+  const ayahN = S.vFrom + S.activeV; // رقم الآية الحقيقي في السورة
+  const url   = audioUrl(S.sheikh, S.surah.n, ayahN);
+
+  if (url === loadedUrl && audio.readyState >= 2) {
+    if (autoPlay) doPlay();
+    return;
+  }
+  loadedUrl = url;
+  pendingPlay = autoPlay;
+
+  if (!audio.paused) { audio.pause(); audio.currentTime = 0; }
+  setStatus('⟳ جارٍ تحميل الآية...', '#e4b55a');
+  document.getElementById('npSub').textContent = S.sheikh.name + ' · ⟳ جارٍ التحميل...';
+  audio.src = url;
+  audio.load();
+}
+
+function doPlay() {
+  const p = audio.play();
+  if (p?.catch) p.catch(e => { if(e.name!=='AbortError') { setStatus('❌ '+e.message,'#f47c7c'); toast$('❌ تعذّر التشغيل'); } });
+}
+
+audio.addEventListener('canplay', () => {
+  setStatus('● جاهز', '#5ec285');
+  document.getElementById('npSub').textContent = S.sheikh ? S.sheikh.name + ' ✅' : '';
+  document.getElementById('npSub').style.color = '#5ec285';
+  if (pendingPlay) { pendingPlay=false; doPlay(); }
+});
+
+audio.addEventListener('playing', () => {
+  S.playing = true;
+  document.getElementById('mainBtn').style.cssText = 'width:44px;height:44px;border-radius:50%;border:none;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#5c2424,#a03030);color:#fff';
+  document.getElementById('mainBtn').textContent = '⏸';
+  document.getElementById('playDot').style.display = 'block';
+  setStatus('▶ يُشغَّل', '#5ec285');
+});
+
+audio.addEventListener('pause', () => {
+  S.playing = false;
+  document.getElementById('mainBtn').style.cssText = 'width:44px;height:44px;border-radius:50%;border:none;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#245c38,#3ea066);color:#fff;box-shadow:0 4px 14px rgba(36,92,56,.45)';
+  document.getElementById('mainBtn').textContent = '▶';
+  document.getElementById('playDot').style.display = 'none';
+});
+
+audio.addEventListener('ended', () => {
+  // انتقل للآية التالية تلقائياً
+  const sl = S.verses.slice(S.vFrom-1, S.vTo);
+  if (S.activeV + 1 < sl.length) {
+    S.activeV++;
+    loadedUrl = '';
+    updateScreen();
+    renderVerses();
+    loadAndPlay(true);
+  } else {
+    S.playing = false;
+    S.activeV = 0;
+    loadedUrl = '';
+    document.getElementById('mainBtn').style.cssText = 'width:44px;height:44px;border-radius:50%;border:none;font-size:19px;cursor:pointer;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#245c38,#3ea066);color:#fff;box-shadow:0 4px 14px rgba(36,92,56,.45)';
+    document.getElementById('mainBtn').textContent = '▶';
+    document.getElementById('playDot').style.display = 'none';
+    renderVerses(); updateScreen();
+    toast$('✅ انتهت التلاوة');
+  }
+});
+
+audio.addEventListener('timeupdate', () => {
+  const d=audio.duration||0, c=audio.currentTime, p=d?(c/d)*100:0;
+  document.getElementById('pFill').style.width = p+'%';
+  document.getElementById('pDot').style.left   = p+'%';
+  document.getElementById('tCur').textContent  = fmt(c);
+  document.getElementById('tDur').textContent  = fmt(d);
+});
+
+audio.addEventListener('error', () => {
+  setStatus('❌ تعذّر تحميل الصوت', '#f47c7c');
+  document.getElementById('npSub').textContent = '❌ تحقق من الاتصال بالإنترنت';
+  document.getElementById('npSub').style.color = '#f47c7c';
+  S.playing = false; pendingPlay = false;
+});
+
+audio.addEventListener('waiting', () => setStatus('⟳ جارٍ التحميل...', '#e4b55a'));
+
+function togglePlay() {
+  if (!S.sheikh) { toast$('⚠ اختر شيخاً أولاً'); return; }
+  if (!S.surah)  { toast$('⚠ اختر سورة أولاً'); return; }
+  if (S.verses.length === 0) { toast$('⚠ جارٍ تحميل الآيات...'); return; }
+  if (S.playing) { audio.pause(); return; }
+  const url = audioUrl(S.sheikh, S.surah.n, S.vFrom+S.activeV);
+  if (url === loadedUrl && audio.readyState >= 2) { doPlay(); }
+  else { loadedUrl=''; loadAndPlay(true); }
+}
+
+function playFromStart() {
+  S.activeV = 0; loadedUrl='';
+  renderVerses(); updateScreen();
+  loadAndPlay(true);
+}
+
+function prevVerse() {
+  if (!S.surah) return;
+  if (S.activeV > 0) { S.activeV--; loadedUrl=''; renderVerses(); updateScreen(); loadAndPlay(S.playing); }
+}
+
+function nextVerse() {
+  if (!S.surah) return;
+  const sl = S.verses.slice(S.vFrom-1, S.vTo);
+  if (S.activeV < sl.length-1) { S.activeV++; loadedUrl=''; renderVerses(); updateScreen(); loadAndPlay(S.playing); }
+}
+
+function seekClick(e) {
+  const r = e.currentTarget.getBoundingClientRect();
+  const ratio = Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
+  if (audio.duration) audio.currentTime = ratio * audio.duration;
+}
+
+/* ═══ RENDER ═══ */
+function renderShuyukh() {
+  document.getElementById('shGrid').innerHTML = SHUYUKH.map((sh,i) => `
+    <div class="sh-card" onclick="pickSheikh(${i})">
+      <div class="sh-flag">${sh.flag}</div>
+      <div class="sh-name">${sh.name}</div>
+      <div class="sh-country">${sh.country}</div>
+    </div>`).join('');
+}
+
+function pickSheikh(i) {
+  S.sheikh = SHUYUKH[i];
+  document.querySelectorAll('.sh-card').forEach((c,j) => c.classList.toggle('on', j===i));
+  document.getElementById('elSheikh').textContent = 'تلاوة: ' + S.sheikh.name;
+  document.getElementById('npSub').style.color = '';
+  toast$('✓ ' + S.sheikh.name);
+  if (S.surah && S.verses.length) { loadedUrl=''; loadAndPlay(false); }
+}
+
+function renderSurahs(list=SURAHS) {
+  document.getElementById('surahList').innerHTML = list.map(sr => `
+    <div class="s-item ${S.surah?.n===sr.n?'on':''}" onclick="pickSurah(${sr.n})">
+      <div class="s-num">${sr.n}</div>
+      <div class="s-ar">${sr.ar}</div>
+      <div class="s-v">${sr.v}</div>
+    </div>`).join('');
+}
+
+function filterSurahs(q) {
+  renderSurahs(q ? SURAHS.filter(s=>s.ar.includes(q)||String(s.n).includes(q)) : SURAHS);
+}
+
+async function pickSurah(n) {
+  S.surah   = SURAHS.find(s=>s.n===n);
+  S.vFrom   = 1;
+  S.vTo     = Math.min(7, S.surah.v);
+  S.activeV = 0;
+  S.verses  = [];
+  document.getElementById('vFrom').value = 1;
+  document.getElementById('vTo').value   = S.vTo;
+  document.getElementById('vList').innerHTML = '<div class="v-loading">⟳ جارٍ تحميل الآيات...</div>';
+  renderSurahs();
+  toast$('✓ سورة ' + S.surah.ar);
+
+  // جيب الآيات من API
+  setStatus('⟳ تحميل الآيات...', '#e4b55a');
+  S.verses = await fetchVerses(n);
+  setStatus('', '');
+
+  if (!S.verses.length) {
+    document.getElementById('vList').innerHTML = '<div class="v-loading" style="color:#f47c7c">❌ فشل تحميل الآيات</div>';
+    return;
+  }
+
+  renderVerses();
+  updateScreen();
+  if (S.sheikh) { loadedUrl=''; loadAndPlay(false); }
+}
+
+function rangeChanged() {
+  if (!S.surah) return;
+  S.vFrom   = Math.max(1, +document.getElementById('vFrom').value||1);
+  S.vTo     = Math.min(+document.getElementById('vTo').value||7, S.surah.v);
+  S.activeV = 0;
+  loadedUrl = '';
+  renderVerses(); updateScreen();
+}
+
+function renderVerses() {
+  if (!S.verses.length) return;
+  const sl = S.verses.slice(S.vFrom-1, S.vTo);
+  document.getElementById('vList').innerHTML = sl.map((v,i) => `
+    <div class="v-item ${S.activeV===i?'on':''}" onclick="pickVerse(${i})">
+      <div class="v-num">${arN(S.vFrom+i)}</div>
+      <div>
+        <div class="v-ar">${v.ar}</div>
+        <div class="v-en">${v.en}</div>
+      </div>
+    </div>`).join('');
+}
+
+function pickVerse(i) {
+  S.activeV = i; loadedUrl='';
+  renderVerses(); updateScreen();
+  if (S.sheikh) loadAndPlay(true);
+  else toast$('⚠ اختر شيخاً أولاً');
+}
+
+function updateScreen() {
+  if (!S.surah || !S.verses.length) return;
+  const sl  = S.verses.slice(S.vFrom-1, S.vTo);
+  const v   = sl[S.activeV] || sl[0];
+  if (!v) return;
+
+  document.getElementById('vAr').textContent  = v.ar;
+  document.getElementById('vRef').textContent = `﴿ ${S.surah.ar} : ${arN(S.vFrom+S.activeV)} ﴾`;
+  document.getElementById('vEn').textContent  = v.en;
+  document.getElementById('vEn').style.display = S.fx.trans ? 'block' : 'none';
+  document.getElementById('npTitle').textContent = `${S.surah.ar} — آية ${arN(S.vFrom+S.activeV)}`;
+
+  const ff = S.font==='amiri'?"'Amiri',serif" : S.font==='cairo'?"'Cairo',sans-serif" : "'Scheherazade New',serif";
+  const ar = document.getElementById('vAr');
+  ar.style.fontFamily = ff;
+  ar.style.fontSize   = S.size + 'px';
+  ar.style.color      = S.color;
+
+  const va = document.getElementById('verseArea');
+  if (S.pos==='top')    { va.style.top='15%'; va.style.bottom='auto'; va.style.transform='none'; }
+  else if(S.pos==='bottom') { va.style.top='auto'; va.style.bottom='14%'; va.style.transform='none'; }
+  else { va.style.top='50%'; va.style.bottom='auto'; va.style.transform='translateY(-50%)'; }
+}
+
+function renderBGs() {
+  document.getElementById('bgGrid').innerHTML = BGS.map((b,i) => `
+    <div class="bg-thumb ${S.bgIdx===i?'on':''}" style="background:${b.g}" onclick="pickBg(${i})">
+      ${b.e}<div class="bg-lbl">${b.l}</div>
+    </div>`).join('');
+}
+
+function pickBg(i) {
+  S.bgIdx = i;
+  document.getElementById('screen').style.background = BGS[i].g;
+  renderBGs(); toast$('✓ ' + BGS[i].l);
+}
+
+/* ═══ CONTROLS ═══ */
+function switchTab(t) {
+  ['sheikh','surah','bg'].forEach((id,i) => {
+    document.getElementById('tab-'+id).style.display = id===t ? 'block' : 'none';
+    document.querySelectorAll('#topTabs .ttab')[i].classList.toggle('on', id===t);
+  });
+}
+
+function setPos(btn, p) {
+  S.pos = p;
+  document.querySelectorAll('.pos-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  updateScreen();
+}
+
+function setFont(btn, f) {
+  S.font = f;
+  document.querySelectorAll('.font-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  updateScreen();
+}
+
+function setSize(v) {
+  S.size = +v;
+  document.getElementById('fsLbl').textContent = v;
+  document.getElementById('fsRange').value = v;
+  document.querySelectorAll('.sz-btn').forEach(b=>b.classList.toggle('on', +b.textContent===+v));
+  updateScreen();
+}
+
+function setColor(c, el) {
+  S.color = c;
+  document.querySelectorAll('.clr-dot').forEach(d=>d.classList.remove('on'));
+  el.classList.add('on');
+  updateScreen();
+}
+
+const fxMap = {moon:'elMoon', stars:'elStars', glow:'elGlow'};
+function toggleFx(k) {
+  S.fx[k] = !S.fx[k];
+  const on=S.fx[k], sw=document.getElementById('sw-'+k), kn=sw.querySelector('.sw-k');
+  sw.style.background = on ? 'linear-gradient(135deg,#245c38,#3ea066)' : '#18301e';
+  sw.style.borderColor= on ? 'rgba(62,160,102,.4)' : 'rgba(255,255,255,.08)';
+  kn.style.right = on ? '3px' : '20px';
+  if (fxMap[k]) document.getElementById(fxMap[k]).style.display = on ? 'block' : 'none';
+  if (k==='trans') { document.getElementById('vEn').style.display = on?'block':'none'; }
+}
+
+function startExport() {
+  document.getElementById('expBox').style.display='block';
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*10+3;
+    if(p>=100){p=100;clearInterval(iv);setTimeout(()=>{document.getElementById('expBox').style.display='none';toast$('✅ تم التصدير!');},500);}
+    document.getElementById('expFill').style.width=p+'%';
+    document.getElementById('expPct').textContent=Math.round(p)+'%';
+  },180);
+}
+
+/* ═══ INIT ═══ */
+renderShuyukh();
+renderSurahs();
+renderBGs();
+document.getElementById('screen').style.background = BGS[0].g;
+// تحميل الفاتحة تلقائياً
+pickSurah(1);
+</script>
+</body>
+</html>
