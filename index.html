@@ -1514,14 +1514,18 @@
         $("mBtn").style.background = "linear-gradient(135deg,#245c38,#3ea066)";
         $("pdot").style.display = "none";
       });
-      audio.addEventListener("ended", async () => {
+      audio.addEventListener("ended", () => {
         // لو كانت البسملة انتهت
         if (S.basmalaMode) {
           S.basmalaMode = false; // أطفئ وضع البسملة
-          S.active = 0; // ابدأ السورة من آيتها الأولى
+          S.active = 0; // ابدأ من أول آية في السورة
           curUrl = "";
 
-          await loadAudio(true); // شغّل أول آية في السورة
+          loadVerse();
+          updateScreen();
+          renderVList();
+
+          loadAudio(true); // شغّل السورة فوراً
           return;
         }
 
@@ -1536,7 +1540,7 @@
           updateScreen();
           renderVList();
 
-          await loadAudio(true);
+          loadAudio(true);
         } else {
           S.playing = false;
         }
